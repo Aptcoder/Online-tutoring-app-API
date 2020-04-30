@@ -25,6 +25,17 @@ var tutorSchema = mongoose.Schema({
         trim : true,
         lowercase : true
     },
+    email: {
+        type : String,
+        validate : {
+            validator : function(add){
+                var re = /\S+@\S+\.\S+/;
+                return re.test(add);
+            },
+            message : mail => `${mail} is not a valid email`
+        },
+        unique : true
+    },
     password : {
         type: String,
         required : true,
