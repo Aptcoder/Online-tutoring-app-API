@@ -5,10 +5,10 @@ const bcrypt = require('bcrypt');
 //schema for tutor model
 var tutorSchema = mongoose.Schema({
 
-    _id: {
-        'type': String,
-        'default': shortid.generate
-      },
+    // _id: {
+    //     'type': String,
+    //     'default': shortid.generate
+    //   },
 
     first_name : {
         type : String,

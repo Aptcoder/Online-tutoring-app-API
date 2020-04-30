@@ -3,10 +3,10 @@ const shortid = require('shortid');
 
 var lessonSchema = mongoose.Schema({
 
-    _id : {
-        type : String,
-        default : shortid.generate
-    },
+    // _id : {
+    //     type : String,
+    //     default : shortid.generate
+    // },
     student : {
         type : mongoose.Schema.Types.ObjectId,
         ref : 'Student' },

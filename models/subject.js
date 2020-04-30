@@ -3,10 +3,10 @@ const shortId = require('shortid')
 
 //schema for subject model 
 var subjectSchema = mongoose.Schema({
-    _id : {
-        type : String,
-        default : shortId.generate
-    },
+    // _id : {
+    //     type : String,
+    //     default : shortId.generate
+    // },
     name : {
         type : String,
         required : true

@@ -25,20 +25,22 @@ var cat = new Category({
 })
 
 
-cat.save().then((res) => {
-    console.log(res)
-}).catch(err => {
-    console.log("error : " + err)
-})
+// cat.save().then((res) => {
+//     console.log(res)
+// }).catch(err => {
+//     console.log("error : " + err)
+// })
 
 
 app.get('/',(req,res)=>{
     res.send('Hello world')
 })
 
-app.use('/user/student',studenRouter)
+//student routes handler
+app.use('/users/student',studenRouter)
 
-app.use('/user/tutors',tutorRouter)
+//tutor routes handler
+app.use('/users/tutor',tutorRouter)
 
 //start(create) server
 app.listen(3000,() => {
