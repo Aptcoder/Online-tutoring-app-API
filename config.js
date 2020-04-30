@@ -1,3 +1,4 @@
 module.exports = {
-    saltRounds : 10
+    saltRounds : 10,
+    secreteKey : "thisuiboiiuiqjwuiboqiloubsoiln"
 }

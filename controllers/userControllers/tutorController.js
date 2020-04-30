@@ -3,7 +3,7 @@ const Tutor = require('../../models/user/tutor')
 
 
 
-const signUpTutor = function(req,res){
+const signUpTutor = function(req,res,next){
     var first_name = req.body.first_name
     var last_name = req.body.last_name
     var password = req.body.password
@@ -24,11 +24,22 @@ const signUpTutor = function(req,res){
 
     newTutor.save().then((tutor) => {
         console.log('tutor successfully created')
-        res.status(201).send({
-            message : "user successfully created",
-            success : true,
-            name : tutor.fullname
+        tutor.generateToken().then((authToken) => {
+            res.cookie('token',authToken.token,{
+                maxAge : 36000000,
+                httpOnly : true,
+                secure : false
+            })
+            res.status(201).set('x-auth',authToken.token).send({
+                message : "user(tutor) successfully created",
+                success : true,
+                name : tutor.fullname
+            })
+        }).catch((err) => {
+            console.log('error generating token' + err);
+            next(err);
         })
+      
     }).catch((err) => {
         console.log('could not save tutor :' + err);
         res.status(400).send({
