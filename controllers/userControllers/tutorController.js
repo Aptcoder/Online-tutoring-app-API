@@ -82,7 +82,7 @@ const loginTutor = function(req,res,next){
                     httpOnly : true,
                     secure : false
                 })
-                res.status(201).set('x-auth',authToken.token).send({
+                res.status(200).set('x-auth',authToken.token).send({
                     message : "login successful",
                     success : true,
                     name : tutor.fullname

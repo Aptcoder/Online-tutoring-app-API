@@ -71,7 +71,8 @@ studentSchema.methods.generateToken = function(){
     let student = this
     console.log('student :' + student)
     let payload = {
-        owner : student.first_name
+        owner : student.first_name,
+        access : "student"
     }
     let options = {
         expiresIn : "10h"

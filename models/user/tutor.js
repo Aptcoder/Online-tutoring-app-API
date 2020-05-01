@@ -74,7 +74,8 @@ tutorSchema.methods.generateToken = function(){
     let tutor = this
     console.log('tutor:' + tutor )
     let payload = {
-        owner : tutor.first_name
+        owner : tutor.first_name,
+        access : "tutor"
     }
     let options = {
         expiresIn : "10h"
@@ -88,6 +89,26 @@ tutorSchema.methods.generateToken = function(){
     })
     return newToken.save().then((authToken) => {
         return authToken
+    })
+}
+
+tutorSchema.statics.verifyToken = function(authToken){
+    let Tutor = this
+    let decoded ;
+
+    try {
+        decoded = jwt.verify(authToken,config.secreteKey)
+    }
+    catch(err){
+        console.log("Error decoding token"+err);
+        return Promise.reject(err)
+    }
+
+    return Tutor.findOne({first_name : decoded.owner}).then((tutor) => {
+        return {
+            tutor : tutor,
+            decoded : decoded
+        }
     })
 }
 

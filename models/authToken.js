@@ -7,8 +7,8 @@ var authTokenSchema = mongoose.Schema({
     },
     access : {
         type : String,
-        enum : ["admin","user"],
-        default: "user"
+        enum : ["admin","student","tutor"],
+        default: "student"
     },
     //owner of token uses the owners first name
     owner : {

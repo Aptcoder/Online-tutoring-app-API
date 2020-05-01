@@ -30,7 +30,7 @@ const signUpStudent = function(req,res,next){
         }).catch((err) => {
             console.log('could not find category :' + err)
             res.status(400).send({
-                message : "category not found. Try 'sss','jsss' or 'primary'",
+                message : "category not found. Try 'sss','jss' or 'primary'",
                 success : false,
                 status : 400
             })
@@ -95,7 +95,7 @@ const loginStudent = function(req,res,next){
                     httpOnly : true,
                     secure : false
                 })
-                res.status(201).set('x-auth',authToken.token).send({
+                res.status(200).set('x-auth',authToken.token).send({
                     message : "login successful",
                     success : true,
                     name : student.fullname
