@@ -32,14 +32,18 @@ const adminAuth = function(req,res,next){
             req.user = auth.tutor;
             next()
         }).catch((err) => {
-            next(err)
+            res.status(401).send({
+                message : 'Oops! you have to login first',
+                success : false,
+                status : 401
+            })
         })
     }).catch((err) => {
         console.log('could not login' + err)
         res.status(401).send({
             message : 'Oops! you have to login',
             success : false,
-            status : 400
+            status : 401
         })
     })
 }

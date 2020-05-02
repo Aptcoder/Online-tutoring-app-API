@@ -1,6 +1,8 @@
 
 const Tutor = require('../../models/user/tutor')
 const bcrypt = require('bcrypt')
+const Category = require('../../models/category')
+const Subject = require('../../models/subject') 
 
 
 
@@ -103,7 +105,46 @@ const loginTutor = function(req,res,next){
 }
 
 
+const registerSubject = function(req,res,next){
+    let tutor = req.user;
+    let subject = req.body.subject 
+    let category = req.body.category 
+
+
+    Category.findOne({name : category}).then((category) => {
+        Subject.findOne({name : subject,category : category._id})
+            .then((subject) => {
+                Tutor.updateOne({_id : tutor._id},{$push : {subjects : subject._id }})
+                    .then(result => {
+                        console.log(result);
+                        res.status(200).send({
+                            message : `${tutor.first_name} successfully registered ${subject.name}`,
+                            success : true
+                        })
+                    })
+        }).catch((err) => {
+            console.log('could not find subject :' + err);
+            res.status(404).send({
+                message : "subject not found. Try 'mathematics'",
+                success : false,
+                status : 404
+            })
+        })
+    }).catch(err => {
+        console.log('could not find category:' + err);
+        res.status(404).send({
+            message : "category not found. Try 'sss','jss' or 'primary'",
+            success : false,
+            status : 404
+        })
+    })
+}
+
+
+
+
 module.exports = {
     signUpTutor,
-    loginTutor
+    loginTutor,
+    registerSubject
 }

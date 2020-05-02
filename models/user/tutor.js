@@ -42,7 +42,8 @@ var tutorSchema = mongoose.Schema({
         minlength : [6,"password must not be less than six characters"]
     },
 
-    // category : [{type : mongoose.Schema.Types.ObjectId , ref : 'Category'}],
+    subjects : [{type : mongoose.Schema.Types.ObjectId , ref : 'Subject' ,unique: true}],
+
     role: {
         type : String,
         enum : ["admin","tutor"],
@@ -85,7 +86,8 @@ tutorSchema.methods.generateToken = function(){
 
     let newToken = new AuthToken({
         owner : tutor.first_name,
-        token : token
+        token : token,
+        access : 'tutor'
     })
     return newToken.save().then((authToken) => {
         return authToken

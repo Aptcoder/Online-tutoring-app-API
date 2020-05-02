@@ -1,12 +1,9 @@
 const mongoose = require('mongoose');
 const shortid = require('shortid')
+const _ = require('lodash')
 
 categorySchema = mongoose.Schema({
 
-    // _id : {
-    //     type : String,
-    //     default : shortid.generate
-    // },
     name : {
         type : String,
         required : true,
@@ -17,6 +14,14 @@ categorySchema = mongoose.Schema({
         type : String,
     }
 })
+
+
+// categorySchema.methods.toJSON = function(){
+//     let category = this
+//     let categoryObject = category.toObject();
+
+//     return _.pick(categoryObject,['name','full_name'])
+// }
 
 //TODO - create sss,jss,primary category
 var Category = mongoose.model('Category',categorySchema)
