@@ -9,6 +9,7 @@ const Category = require('./models/category')
 const studenRouter = require('./routes/userRoutes/studentRoutes')
 const tutorRouter = require('./routes/userRoutes/tutorRoutes')
 const subjectRouter = require('./routes/subjectsRoutes')
+const categoryRouter = require('./routes/categoryRoutes')
 mongoose.Promise = global.Promise
 
 
@@ -44,14 +45,17 @@ app.get('/',(req,res)=>{
 })
 
 //student routes handler
-app.use('/users/student',studenRouter)
+app.use('/student',studenRouter)
 
 //tutor routes handler
-app.use('/users/tutor',tutorRouter)
+app.use('/tutor',tutorRouter)
 
 
 //subject routes handler
 app.use('/subject',subjectRouter)
+
+//category routes handler
+app.use('/category',categoryRouter)
 
 
 //start(create) server

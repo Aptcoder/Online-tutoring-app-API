@@ -82,12 +82,36 @@ studentSchema.methods.generateToken = function(){
 
     let newToken = new AuthToken({
         owner : student.first_name,
-        token : token
+        token : token,
+        access : 'student'
     })
     return newToken.save().then((authToken) => {
         return authToken
     })
 }
+
+studentSchema.statics.verifyToken = function(authToken){
+    let Student = this
+    let decoded ;
+
+    try {
+        decoded = jwt.verify(authToken,config.secreteKey)
+    }
+    catch(err){
+        console.log("Error decoding token"+err);
+        return Promise.reject(err)
+    }
+
+    return Student.findOne({first_name : decoded.owner}).then((student) => {
+        return {
+            student,
+            decoded : decoded
+        }
+    })
+}
+
+
+
 
 var Student = mongoose.model('Student',studentSchema)
 module.exports = Student

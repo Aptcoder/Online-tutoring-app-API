@@ -29,10 +29,10 @@ const signUpStudent = function(req,res,next){
             studentObj.category = cat._id
         }).catch((err) => {
             console.log('could not find category :' + err)
-            res.status(400).send({
+            res.status(404).send({
                 message : "category not found. Try 'sss','jss' or 'primary'",
                 success : false,
-                status : 400
+                status : 404
             })
         })
     }
