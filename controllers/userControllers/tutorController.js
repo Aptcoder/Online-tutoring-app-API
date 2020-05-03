@@ -31,7 +31,7 @@ const signUpTutor = function(req,res,next){
         console.log('tutor successfully created')
         tutor.generateToken().then((authToken) => {
             res.cookie('token',authToken.token,{
-                maxAge : 86400000,
+                maxAge : 604800000,
                 httpOnly : true,
                 secure : false
             })
@@ -80,7 +80,7 @@ const loginTutor = function(req,res,next){
             console.log('password correct!')
             tutor.generateToken().then((authToken) => {
                 res.cookie('token',authToken.token,{
-                    maxAge : 36000000,
+                    maxAge : 604800000,
                     httpOnly : true,
                     secure : false
                 })

@@ -144,9 +144,65 @@ const getSubByName = function(req,res,next){
         })
 }
 
+const updateSubject = function(req,res,next){
+    let name = req.body.name
+    let category = req.body.category ;
+    let subjectId = req.params.id
+    let categoryParam = req.params.category
+    let newId;
+    if(!ObjectID.isValid(subjectId)){
+        res.status(403).send({
+            message : "This url requires a valid Id for the subject",
+            success : false,
+            status : 403
+        })
+    }
+    //check for category to be update to
+    if(category){
+        Category.findOne({name : category}).then((cat) => {
+            newId = cat._id;
+        }).catch((err) => {
+            console.log('could not find new category: ' + err);
+            res.status(404).send({
+                message : "category in request not found. Try 'sss','jss' or 'primary'",
+                success : false,
+                status : 404
+            })
+        })
+    }
+   
+
+        Category.findOne({name : categoryParam}).then((cat) => {
+            Subject.updateOne({_id : subjectId,Category : cat._id},{$set : {name : name,category : newId || cat._id }})
+                .then((result ) => {
+                    console.log('update result : ' + result)
+                    res.send({
+                        message : "update successful",
+                        success : true
+                    })
+                }).catch((err) => {
+                    console.log('could not update subject by id' + err);
+                    res.status(404).send({
+                        message : "subject not found. Try a valid Id",
+                        success : false,
+                        status : 404
+                    })
+                })
+        }).catch((err) => {
+            console.log('could not find category' + err);
+            res.status(404).send({
+                message : "category not found. Try 'sss','jss' or 'primary'",
+                success : false,
+                status : 404
+            })
+        })
+
+}
+
 module.exports = {
     createSubject,
     getTutorsTakingSub,
     getSubInCatById,
-    getSubByName
+    getSubByName,
+    updateSubject
 }

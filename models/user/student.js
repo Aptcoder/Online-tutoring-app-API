@@ -75,7 +75,7 @@ studentSchema.methods.generateToken = function(){
         access : "student"
     }
     let options = {
-        expiresIn : "1d"
+        expiresIn : "7d"
     }
 
     let token = jwt.sign(payload,config.secreteKey,options);
