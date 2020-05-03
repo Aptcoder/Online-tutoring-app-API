@@ -16,12 +16,12 @@ categorySchema = mongoose.Schema({
 })
 
 
-// categorySchema.methods.toJSON = function(){
-//     let category = this
-//     let categoryObject = category.toObject();
+categorySchema.methods.toJSON = function(){
+    let category = this
+    let categoryObject = category.toObject();
 
-//     return _.pick(categoryObject,['name','full_name'])
-// }
+    return _.pick(categoryObject,['name','full_name'])
+}
 
 //TODO - create sss,jss,primary category
 var Category = mongoose.model('Category',categorySchema)

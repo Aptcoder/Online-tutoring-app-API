@@ -90,6 +90,13 @@ studentSchema.methods.generateToken = function(){
     })
 }
 
+studentSchema.methods.toJSON = function(){
+    let student = this
+    let studentObject = student.toObject();
+
+    return _.pick(studentObject,['first_name','email'])
+}
+
 studentSchema.statics.verifyToken = function(authToken){
     let Student = this
     let decoded ;

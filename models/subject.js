@@ -11,12 +11,12 @@ var subjectSchema = mongoose.Schema({
 }) 
 
 
-// subjectSchema.methods.toJSON = function(){
-//     let subject = this
-//     let subjectObject = subject.toObject();
+subjectSchema.methods.toJSON = function(){
+    let subject = this
+    let subjectObject = subject.toObject();
 
-//     return _.pick(subjectObject,['name','category'])
-// }
+    return _.pick(subjectObject,['name','category'])
+}
 
 
 var Subject = mongoose.model('Subject',subjectSchema)
