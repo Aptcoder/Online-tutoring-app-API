@@ -9,6 +9,13 @@ let {ObjectID} = require('mongodb')
 const createSubject = function(req,res,next){
     let name = req.body.name;
     let category = req.body.category
+    if(!name || !category){
+        res.status(403).send({
+            message : "name and category is required!",
+            success : false,
+            status : 403
+        })
+    }
 
     Category.findOne({name : category}).then((cat) => {
         let newSubject = new Subject({
@@ -108,12 +115,9 @@ const getSubInCatById = function(req,res,next){
             status : 404
         })
     })
-
-
-    
-  
-
 }
+
+
  //handler for routes to get subjects by name
 const getSubByName = function(req,res,next){
     let name = req.query.name
@@ -144,6 +148,7 @@ const getSubByName = function(req,res,next){
         })
 }
 
+//handler function to update a subject in category
 const updateSubject = function(req,res,next){
     let name = req.body.name
     let category = req.body.category ;
@@ -199,10 +204,58 @@ const updateSubject = function(req,res,next){
 
 }
 
+const deleteSubject = function(req,res,next){
+    let category = req.params.category;
+    let subjectId = req.params.id;
+
+
+    if(!ObjectID.isValid(subjectId)){
+        res.status(403).send({
+            message : "This url requires a valid Id for the subject",
+            success : false,
+            status : 403
+        })
+    }
+
+    Category.findOne({name : category}).then((cat) => {
+        Subject.deleteOne({_id : subjectId,category : cat._id})
+            .then((result)=>{
+                if(!result.n){
+                    res.status(404).send({
+                        message : "subject not found. Try a valid Id",
+                        success : false,
+                        status : 404
+                    })
+                }
+                res.send({
+                    message : "subject found and deleted",
+                    success : true,
+                })
+        }).catch((err)=> {
+            console.log('could not find subject by id' + err);
+            res.status(404).send({
+                message : "subject not found. Try a valid Id",
+                success : false,
+                status : 404
+            })
+        })
+
+    }).catch((err) => {
+        console.log('category not found ' + err)
+        res.status(404).send({
+            message : "category not found. Try 'sss','jss' or 'primary'",
+            success : false,
+            status : 404
+        })
+    })
+
+}
+
 module.exports = {
     createSubject,
     getTutorsTakingSub,
     getSubInCatById,
     getSubByName,
-    updateSubject
+    updateSubject,
+    deleteSubject
 }

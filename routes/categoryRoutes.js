@@ -14,6 +14,7 @@ router.get('/:category/subject/:subject/tutors',studentAuth,subjController.getTu
 //route to get subject from category by id
 router.get('/:category/subject/:id',generalAuth,subjController.getSubInCatById)
 router.put('/:category/subject/:id',adminAuth,subjController.updateSubject)
+router.delete('/:category/subject/:id',adminAuth,subjController.deleteSubject)
 
 //route to get all categories
 router.get('/',generalAuth,controller.getCategories)
