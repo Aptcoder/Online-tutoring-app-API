@@ -85,7 +85,7 @@ tutorSchema.methods.generateToken = function(){
     let tutor = this
     console.log('tutor:' + tutor )
     let payload = {
-        owner : tutor.first_name,
+        owner : tutor.email,
         access : "tutor"
     }
     let options = {
@@ -95,7 +95,7 @@ tutorSchema.methods.generateToken = function(){
     let token = jwt.sign(payload,config.secreteKey,options);
 
     let newToken = new AuthToken({
-        owner : tutor.first_name,
+        owner : tutor.email,
         token : token,
         access : 'tutor'
     })
@@ -116,7 +116,7 @@ tutorSchema.statics.verifyToken = function(authToken){
         return Promise.reject(err)
     }
 
-    return Tutor.findOne({first_name : decoded.owner}).then((tutor) => {
+    return Tutor.findOne({email : decoded.owner}).then((tutor) => {
         return {
             tutor : tutor,
             decoded : decoded

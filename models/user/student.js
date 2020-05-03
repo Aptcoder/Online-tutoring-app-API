@@ -71,7 +71,7 @@ studentSchema.methods.generateToken = function(){
     let student = this
     console.log('student :' + student)
     let payload = {
-        owner : student.first_name,
+        owner : student.email,
         access : "student"
     }
     let options = {
@@ -81,7 +81,7 @@ studentSchema.methods.generateToken = function(){
     let token = jwt.sign(payload,config.secreteKey,options);
 
     let newToken = new AuthToken({
-        owner : student.first_name,
+        owner : student.email,
         token : token,
         access : 'student'
     })
