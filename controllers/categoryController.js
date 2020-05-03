@@ -12,7 +12,7 @@ const getSubjectsInCategory = function(req,res,next){
         .populate('category','name')
         .then((subjects)=> {
             res.status(200).send({
-                message : "subjects :",
+                message : "subjects found :",
                 success : true,
                 subjects : subjects
             })
@@ -30,8 +30,15 @@ const getSubjectsInCategory = function(req,res,next){
     
 }
 
-
+const getCategories = function(req,res,next){
+    Category.find({}).then((categories) => {
+        res.send(({
+            categories
+        }))
+    }).catch((err) => next(err))
+}
 
 module.exports = {
-    getSubjectsInCategory
+    getSubjectsInCategory,
+    getCategories
 }

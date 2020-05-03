@@ -31,7 +31,7 @@ const signUpTutor = function(req,res,next){
         console.log('tutor successfully created')
         tutor.generateToken().then((authToken) => {
             res.cookie('token',authToken.token,{
-                maxAge : 36000000,
+                maxAge : 86400000,
                 httpOnly : true,
                 secure : false
             })
@@ -140,11 +140,39 @@ const registerSubject = function(req,res,next){
     })
 }
 
+const getTutorsByName = function(req,res,next){
+    let name = req.query.first_name
 
+    if(!name){
+        res.status(401).send({
+            message : `Url requires a query,'first_name' of tutor`,
+            success : false,
+            status : 404
+        })
+    }
+    Tutor.find({first_name : name})
+        .sort({name : 'asc'})
+        .populate('subjects')
+        .then((tutors) => {
+            res.send({
+                message : "subjects found",
+                success : true,
+                tutors
+            })
+        }).catch((err) => {
+            console.log(`Tutor not found by name :` + err)
+            res.status(404).send({
+                message : `Tutor with name ${name} not found`,
+                success : false,
+                status : 404
+            })
+        })
+}
 
 
 module.exports = {
     signUpTutor,
     loginTutor,
+    getTutorsByName,
     registerSubject
 }

@@ -75,7 +75,7 @@ studentSchema.methods.generateToken = function(){
         access : "student"
     }
     let options = {
-        expiresIn : "10h"
+        expiresIn : "1d"
     }
 
     let token = jwt.sign(payload,config.secreteKey,options);
@@ -88,6 +88,13 @@ studentSchema.methods.generateToken = function(){
     return newToken.save().then((authToken) => {
         return authToken
     })
+}
+
+studentSchema.methods.toJSON = function(){
+    let student = this
+    let studentObject = student.toObject();
+
+    return _.pick(studentObject,['first_name','email'])
 }
 
 studentSchema.statics.verifyToken = function(authToken){

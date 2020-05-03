@@ -3,6 +3,7 @@ const shortid = require('shortid');
 const bcrypt = require('bcrypt');
 const config = require('../../config')
 const jwt = require('jsonwebtoken')
+const _ = require('lodash')
 const AuthToken = require('../../models/authToken')
 
 //schema for tutor model
@@ -71,6 +72,15 @@ tutorSchema.virtual('fullname').get(function(){
     return this.first_name + ' ' + this.last_name
 })
 
+tutorSchema.methods.toJSON = function(){
+    let tutor = this
+    let tutorObject = tutor.toObject();
+
+    return _.pick(tutorObject,['fullname','subjects','email'])
+}
+
+
+
 tutorSchema.methods.generateToken = function(){
     let tutor = this
     console.log('tutor:' + tutor )
@@ -79,7 +89,7 @@ tutorSchema.methods.generateToken = function(){
         access : "tutor"
     }
     let options = {
-        expiresIn : "10h"
+        expiresIn : "1d"
     }
 
     let token = jwt.sign(payload,config.secreteKey,options);
