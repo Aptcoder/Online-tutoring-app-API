@@ -10,10 +10,10 @@ const createSubject = function(req,res,next){
     let name = req.body.name;
     let category = req.body.category
     if(!name || !category){
-        res.status(403).send({
+        res.status(400).send({
             message : "name and category is required!",
             success : false,
-            status : 403
+            status : 400
         })
     }
 
@@ -83,10 +83,10 @@ const getSubInCatById = function(req,res,next){
     let subjectId = req.params.id;
 
     if(!ObjectID.isValid(subjectId)){
-        res.status(403).send({
+        res.status(400).send({
             message : "This url requires a valid Id for the subject",
             success : false,
-            status : 403
+            status : 400
         })
     }
 
@@ -123,10 +123,10 @@ const getSubByName = function(req,res,next){
     let name = req.query.name
 
     if(!name){
-        res.status(401).send({
+        res.status(400).send({
             message : `Url requires a query,'name' of subject`,
             success : false,
-            status : 404
+            status : 400
         })
     }
     Subject.find({name : name})
@@ -156,10 +156,10 @@ const updateSubject = function(req,res,next){
     let categoryParam = req.params.category
     let newId;
     if(!ObjectID.isValid(subjectId)){
-        res.status(403).send({
+        res.status(400).send({
             message : "This url requires a valid Id for the subject",
             success : false,
-            status : 403
+            status : 400
         })
     }
     //check for category to be update to
@@ -210,10 +210,10 @@ const deleteSubject = function(req,res,next){
 
 
     if(!ObjectID.isValid(subjectId)){
-        res.status(403).send({
+        res.status(400).send({
             message : "This url requires a valid Id for the subject",
             success : false,
-            status : 403
+            status : 400
         })
     }
 

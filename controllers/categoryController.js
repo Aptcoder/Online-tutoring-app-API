@@ -38,7 +38,44 @@ const getCategories = function(req,res,next){
     }).catch((err) => next(err))
 }
 
+const updateCategory = function(req,res,next){
+    let name = req.params.category;
+    let newName = req.body.name 
+    let newFullname = req.body.full_name
+
+    if(!newName || !newFullname){
+        res.status(400).send({
+            message : "'name' and 'full_name' is required for this request",
+            success : false,
+            status : 400
+        })
+    }
+
+    Category.updateOne({name : name},{$set : {name : newName,full_name : newFullname}})
+        .then((result) => {
+            if(!result.n){
+                res.status(404).send({
+                    message : "category not found. Try 'sss','jss' or 'primary'",
+                    success : false,
+                    status : 404
+                })
+            }
+            res.send({
+                message : "Category updated succefully",
+                success : true
+            })
+        }).catch((err) => {
+            console.log('could not update category' + err)
+            res.status(404).send({
+                message : "category not found. Try 'sss','jss' or 'primary'",
+                success : false,
+                status : 404
+            })
+        })
+
+}
 module.exports = {
     getSubjectsInCategory,
-    getCategories
+    getCategories,
+    updateCategory
 }
