@@ -43,7 +43,7 @@ const signUpStudent = function(req,res,next){
         console.log('tutor successfully created')
         student.generateToken().then((authToken) => {
             res.cookie('token',authToken.token,{
-                maxAge : 36000000,
+                maxAge : 86400000,
                 httpOnly : true,
                 secure : false
             })

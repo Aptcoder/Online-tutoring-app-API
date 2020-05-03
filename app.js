@@ -49,13 +49,15 @@ app.use('/student',studenRouter)
 
 //tutor routes handler
 app.use('/tutor',tutorRouter)
-
+app.use('/tutors',tutorRouter)
 
 //subject routes handler
 app.use('/subject',subjectRouter)
+app.use('/subjects',subjectRouter)
 
 //category routes handler
 app.use('/category',categoryRouter)
+app.use('/categories',categoryRouter)
 
 
 //start(create) server

@@ -79,7 +79,7 @@ tutorSchema.methods.generateToken = function(){
         access : "tutor"
     }
     let options = {
-        expiresIn : "10h"
+        expiresIn : "1d"
     }
 
     let token = jwt.sign(payload,config.secreteKey,options);

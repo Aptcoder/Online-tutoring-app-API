@@ -5,7 +5,7 @@ const Tutor = require('../../models/user/tutor')
 
 const generalAuth = function(req,res,next){
     let  token = req.cookies.token || req.header('x-auth')
-
+    console.log(req.header('x-auth'))
     if(!token){
         res.status(401).send({
             message : 'Oops! you have to login first',
@@ -19,15 +19,19 @@ const generalAuth = function(req,res,next){
             Student.verifyToken(authToken.token).then((auth) => {
                 req.user = auth.student
                 if(auth.decoded.access === 'student'){
-                    next()
+                    return next()
                 }
-               return Promise.reject();
+               return  res.status(403).send({
+                message : 'Oops! Not allowed',
+                success : false,
+                status : 403
+            })
             }).catch((err) => {
                 console.log('could not verfify student token:' + err)
-                res.status(403).send({
-                    message : 'Oops! Not allowed',
+                res.status(401).send({
+                    message : 'Oops! you have to login first',
                     success : false,
-                    status : 403
+                    status : 401
                 })
             })
         }
@@ -37,13 +41,17 @@ const generalAuth = function(req,res,next){
                 if(auth.decoded.access === 'tutor'){
                     next()
                 }
-               return Promise.reject();
+               return res.status(403).send({
+                message : 'Oops! Not allowed',
+                success : false,
+                status : 403
+            })
             }).catch((err) => {
                 console.log('could not verify tutor token' + err)
-                res.status(403).send({
-                    message : 'Oops! Not allowed',
+                res.status(401).send({
+                    message : 'Oops! you have to login first',
                     success : false,
-                    status : 403
+                    status : 401
                 })
             })
         }

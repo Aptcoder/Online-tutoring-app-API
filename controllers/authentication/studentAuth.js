@@ -18,13 +18,17 @@ const tutorAuth = function(req,res,next){
                 if(auth.decoded.access === 'student'){
                    return next()
                 }
-               return Promise.reject();
+               return res.status(403).send({
+                message : 'Oops! Not allowed',
+                success : false,
+                status : 403
+            })
             }).catch((err) => {
                 console.log('could not verify tutor token' + err)
-                res.status(403).send({
-                    message : 'Oops! Not allowed',
+                res.status(401).send({
+                    message : 'Oops! you have to login first',
                     success : false,
-                    status : 403
+                    status : 401
                 })
             })
     }).catch((err) => {
