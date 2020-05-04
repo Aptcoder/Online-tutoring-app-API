@@ -74,8 +74,41 @@ const updateCategory = function(req,res,next){
         })
 
 }
+
+
+const deleteCategory = function(req,res,next){
+    let name = req.params.category;
+/* noticing that the pre hook for model middlewares is called with the query
+    -- first I find the category by name then i delete by id 
+    */
+    Category.findOne({name : name}).then((category) => {
+        console.log(category)
+        if(!category){
+            console.log("can not find category 1")
+            res.status(404).send({
+                message : "category not found. Try 'sss','jss' or 'primary'",
+                success : false,
+                status : 404
+            })
+        }
+       return Category.deleteOne({_id : category._id}).then((result) => {
+            res.send({
+                message : "Category successfully deleted",
+                success : true
+            })
+        })
+    }).catch((err) => {
+        console.log("can not find category 2" + err)
+        res.status(404).send({
+            message : "category not found. Try 'sss','jss' or 'primary'",
+            success : false,
+            status : 404
+        })
+    })
+}
 module.exports = {
     getSubjectsInCategory,
     getCategories,
-    updateCategory
+    updateCategory,
+    deleteCategory
 }

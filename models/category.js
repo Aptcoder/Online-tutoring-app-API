@@ -15,6 +15,25 @@ categorySchema = mongoose.Schema({
     }
 })
 
+/*
+delete subjects that refer to this category
+
+*/
+categorySchema.pre('deleteOne', function(next){
+    let catId = this.getQuery()["_id"];
+    console.log("id :" + catId)
+    mongoose.model('Subject').deleteMany({category : catId})
+    .then((res)=> {
+        console.log("deleted subjects related",res)
+        next()
+    })
+    .catch((err) => {
+        console.log("error deleted related subjects")
+        next(err)
+    })
+}
+)
+
 
 categorySchema.methods.toJSON = function(){
     let category = this

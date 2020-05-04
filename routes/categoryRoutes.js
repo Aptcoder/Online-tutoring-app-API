@@ -19,6 +19,6 @@ router.delete('/:category/subject/:id',adminAuth,subjController.deleteSubject)
 //route to get all categories
 router.get('/',generalAuth,controller.getCategories)
 router.put('/:category',adminAuth,controller.updateCategory)
-
+router.delete('/:category',adminAuth,controller.deleteCategory)
 
 module.exports = router
