@@ -9,10 +9,12 @@ const AuthToken = require('../../models/authToken')
 //schema for tutor model
 var tutorSchema = mongoose.Schema({
 
-    // _id: {
-    //     'type': String,
-    //     'default': shortid.generate
-    //   },
+    active :{
+        type : Number,
+        //the value 1 is for active users and 0 for not
+        enum : [1,0],
+        default : 1
+    },
 
     first_name : {
         type : String,

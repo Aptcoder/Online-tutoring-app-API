@@ -19,4 +19,8 @@ router.post('/subject/register',tutorAuth,controller.registerSubject)
 
  //routes for getting tutor by id
  router.get('/:id',adminAuth,controller.getTutorById)
+
+ //routes to deactivate tutor - admin access only
+ router.put('/:id/deactivate',adminAuth,controller.deactivateTutor)
+
 module.exports = router

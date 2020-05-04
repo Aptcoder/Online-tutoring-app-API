@@ -185,6 +185,40 @@ const getAllTutors = function(req,res,next){
     })
 }
 
+const deactivateTutor = function(req,res,next){
+    let id = req.params.id
+
+    if(!ObjectId.isValid(id)){
+        res.status(400).send({
+            message : "This route requires a valid tutor Id",
+            success : false,
+            status : 400
+        })
+    }
+
+    Tutor.updateOne({_id : id},{$set :{active : 0}})
+        .then((result) => {
+            if(!result.n){
+                res.status(404).send({
+                    message : "Tutor with Id not found,Try Valid Id",
+                    success : false,
+                    status : 404
+                })
+            }
+            res.send({
+                message : "Tutor deactivated",
+                success : true
+            })
+        }).catch((err) => {
+            console.log("could not deactivate tutor" + err)
+            res.status(404).send({
+                message : "Tutor with Id not found,Try Valid Id",
+                success : false,
+                status : 404
+            })
+        })
+}
+
 const getTutorById = function(req,res,next){
     let id = req.params.id
 
@@ -220,5 +254,6 @@ module.exports = {
     getTutorsByName,
     registerSubject,
     getAllTutors,
-    getTutorById
+    getTutorById,
+    deactivateTutor
 }
