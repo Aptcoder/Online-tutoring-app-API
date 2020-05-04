@@ -29,7 +29,7 @@ subjectSchema.methods.toJSON = function(){
     let subject = this
     let subjectObject = subject.toObject();
 
-    return _.pick(subjectObject,['name','category'])
+    return _.pick(subjectObject,['_id','name','category'])
 }
 
 

@@ -76,7 +76,7 @@ tutorSchema.methods.toJSON = function(){
     let tutor = this
     let tutorObject = tutor.toObject();
 
-    return _.pick(tutorObject,['fullname','subjects','email'])
+    return _.pick(tutorObject,['_id','first_name','subjects','email'])
 }
 
 

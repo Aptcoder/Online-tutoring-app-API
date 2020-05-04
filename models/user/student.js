@@ -94,7 +94,7 @@ studentSchema.methods.toJSON = function(){
     let student = this
     let studentObject = student.toObject();
 
-    return _.pick(studentObject,['first_name','email'])
+    return _.pick(studentObject,['_id','first_name','email',])
 }
 
 studentSchema.statics.verifyToken = function(authToken){

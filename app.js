@@ -50,6 +50,9 @@ app.use('/student',studenRouter)
 //tutor routes handler
 app.use('/tutor',tutorRouter)
 app.use('/tutors',tutorRouter)
+//tutor routes - admin
+app.use('/admin/tutor',tutorRouter)
+app.use('/admin/tutors',tutorRouter)
 
 //subject routes handler
 app.use('/subject',subjectRouter)

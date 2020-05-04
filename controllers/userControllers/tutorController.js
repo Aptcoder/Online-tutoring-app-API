@@ -3,7 +3,7 @@ const Tutor = require('../../models/user/tutor')
 const bcrypt = require('bcrypt')
 const Category = require('../../models/category')
 const Subject = require('../../models/subject') 
-
+const {ObjectId} = require('mongodb')
 
 
 const signUpTutor = function(req,res,next){
@@ -168,11 +168,57 @@ const getTutorsByName = function(req,res,next){
             })
         })
 }
+/*
+get all the tutors in the data base
+*/
+const getAllTutors = function(req,res,next){
+    Tutor.find({})
+    .populate('subjects')
+    .then((tutors) => {
+        res.send({
+            message : "Tutors found",
+            success : true,
+            tutors
+        })
+    }).catch((err) => {
+        next(err)
+    })
+}
+
+const getTutorById = function(req,res,next){
+    let id = req.params.id
+
+    if(!ObjectId.isValid(id)){
+        res.status(400).send({
+            message : "This route requires a valid tutor Id",
+            success : false,
+            status : 400
+        })
+    }
+    Tutor.findById(id)
+    .populate('subjects')
+    .then((tutor)=>{
+        res.send({
+            message : 'Tutor found',
+            success : true,
+            tutor
+        })
+    }).catch((err) => {
+        console.log('Could not find tutor by id' + err)
+        res.status(404).send({
+            message : "Tutor with id not found. Try valid id",
+            success : false,
+            status : 404
+        })
+    })
+}
 
 
 module.exports = {
     signUpTutor,
     loginTutor,
     getTutorsByName,
-    registerSubject
+    registerSubject,
+    getAllTutors,
+    getTutorById
 }
