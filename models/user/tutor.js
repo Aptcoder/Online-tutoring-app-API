@@ -8,7 +8,13 @@ const AuthToken = require('../../models/authToken')
 
 //schema for tutor model
 var tutorSchema = mongoose.Schema({
-
+    username : {
+        type : String,
+        required : true,
+        trim : true,
+        lowercase : true,
+        unique : true
+    },
     active :{
         type : Number,
         //the value 1 is for active users and 0 for not
@@ -24,7 +30,6 @@ var tutorSchema = mongoose.Schema({
     } ,
     last_name : {
         type : String,
-        required : true,
         trim : true,
         lowercase : true
     },

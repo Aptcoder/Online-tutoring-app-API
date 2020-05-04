@@ -5,11 +5,14 @@ const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser')
 const Category = require('./models/category')
 
+
 //my modules
 const studenRouter = require('./routes/userRoutes/studentRoutes')
 const tutorRouter = require('./routes/userRoutes/tutorRoutes')
 const subjectRouter = require('./routes/subjectsRoutes')
+const lessonRouter = require('./routes/lessonRoutes')
 const categoryRouter = require('./routes/categoryRoutes')
+const {ErrorHandler,handleError } = require('./helper/error')
 mongoose.Promise = global.Promise
 
 
@@ -61,12 +64,26 @@ app.use('/subjects',subjectRouter)
 //category routes handler
 app.use('/category',categoryRouter)
 app.use('/categories',categoryRouter)
-
+//lesson routes
+app.use('/lesson',lessonRouter);
+app.use('/lessons',lessonRouter);
+//lessons routes -admin access
+app.use('/admin/lesson',lessonRouter);
+app.use('/admin/lessons',lessonRouter);
+//lesson routes student access
+app.use('/student/lesson',lessonRouter)
 
 app.use((err, req, res, next) => {
+
+
+    if(err instanceof ErrorHandler ){
+        console.log("i got here")
+       return handleError(err,res)
+    }
+    
     err.statusCode = err.statusCode || 500;
     err.status = err.status || 'error';
-  
+    
     res.status(err.statusCode).json({
       status: err.status,
       message: err.message || "Oops something went wrong"

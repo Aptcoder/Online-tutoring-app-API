@@ -23,7 +23,7 @@ const adminAuth = function(req,res,next){
         Tutor.verifyToken(authToken.token).then((auth) => {
             console.log("role :" + auth.tutor.role)
             if(auth.tutor.role !== 'admin'){
-                res.status(403).send({
+                return res.status(403).send({
                     message : 'access denied',
                     success : false,
                     status : 403

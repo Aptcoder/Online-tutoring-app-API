@@ -3,6 +3,8 @@ const Category = require('../../models/category')
 const bcrypt = require('bcrypt')
 
 
+//TODO- refactor error responses
+
 const signUpStudent = function(req,res,next){
     var first_name = req.body.first_name
     var last_name = req.body.last_name

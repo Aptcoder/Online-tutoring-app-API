@@ -13,11 +13,12 @@ const signUpTutor = function(req,res,next){
     var email = req.body.email
     
     if(password.length < 6){
-        res.status(400).send({
-            message : "password must be at least six characters",
-            success : false,
-            status : 400
-        })
+        throw new ErrorHandler(400,"password must be at least six characters")
+        // res.status(400).send({
+        //     message : "password must be at least six characters",
+        //     success : false,
+        //     status : 400
+        // })
     }
 
     let newTutor = new Tutor({
@@ -47,11 +48,12 @@ const signUpTutor = function(req,res,next){
       
     }).catch((err) => {
         console.log('could not save tutor :' + err);
-        res.status(400).send({
-            message : "email address already exists",
-            success : false,
-            status : 400
-        })
+        throw new ErrorHandler(400,"email address already exists")
+        // res.status(400).send({
+        //     message : "email address already exists",
+        //     success : false,
+        //     status : 400
+        // })
     })
 }
 
@@ -61,21 +63,23 @@ const loginTutor = function(req,res,next){
     let password = req.body.password;
 
     if(password.length < 6){
-        res.status(400).send({
-            message : "password must be at least six characters",
-            success : false,
-            status : 400
-        })
+        throw new ErrorHandler(400,"password must be at least six characters")
+        // res.status(400).send({
+        //     message : "password must be at least six characters",
+        //     success : false,
+        //     status : 400
+        // })
     }
 
     Tutor.findOne({email : email}).then((tutor) => {
         bcrypt.compare(password,tutor.password).then((result) => {
             if(!result){
-                res.status(401).send({
-                    message : "wrong password",
-                    success : false,
-                    status : 401
-                })
+                throw new ErrorHandler(401,"wrong password")
+                // res.status(401).send({
+                //     message : "wrong password",
+                //     success : false,
+                //     status : 401
+                // })
             }
             console.log('password correct!')
             tutor.generateToken().then((authToken) => {
@@ -96,11 +100,12 @@ const loginTutor = function(req,res,next){
         })
     }).catch((err) => {
         console.log('error occured while finding tutor :' + err);
-        res.status(400).send({
-            message : "Oops! Invalid email address",
-            success : false,
-            status : 400
-        })
+        throw new ErrorHandler(400,"Oops! Invalid email address")
+        // res.status(400).send({
+        //     message : "Oops! Invalid email address",
+        //     success : false,
+        //     status : 400
+        // })
     })
 }
 
@@ -124,19 +129,21 @@ const registerSubject = function(req,res,next){
                     })
         }).catch((err) => {
             console.log('could not find subject :' + err);
-            res.status(404).send({
-                message : "subject not found. Try 'mathematics'",
-                success : false,
-                status : 404
-            })
+            throw new ErrorHandler(404,"subject not found. Try 'mathematics'")
+            // res.status(404).send({
+            //     message : "subject not found. Try 'mathematics'",
+            //     success : false,
+            //     status : 404
+            // })
         })
     }).catch(err => {
         console.log('could not find category:' + err);
-        res.status(404).send({
-            message : "category not found. Try 'sss','jss' or 'primary'",
-            success : false,
-            status : 404
-        })
+        throw new ErrorHandler(404,"category not found. Try 'sss','jss' or 'primary'")
+        // res.status(404).send({
+        //     message : "category not found. Try 'sss','jss' or 'primary'",
+        //     success : false,
+        //     status : 404
+        // })
     })
 }
 
@@ -144,11 +151,12 @@ const getTutorsByName = function(req,res,next){
     let name = req.query.first_name
 
     if(!name){
-        res.status(401).send({
-            message : `Url requires a query,'first_name' of tutor`,
-            success : false,
-            status : 404
-        })
+        throw new ErrorHandler(401,"Url requires a query,'first_name' of tutor")
+        // res.status(401).send({
+        //     message : `Url requires a query,'first_name' of tutor`,
+        //     success : false,
+        //     status : 404
+        // })
     }
     Tutor.find({first_name : name})
         .sort({name : 'asc'})
@@ -161,11 +169,12 @@ const getTutorsByName = function(req,res,next){
             })
         }).catch((err) => {
             console.log(`Tutor not found by name :` + err)
-            res.status(404).send({
-                message : `Tutor with name ${name} not found`,
-                success : false,
-                status : 404
-            })
+            throw new ErrorHandler(401,`Tutor with name ${name} not found`)
+            // res.status(404).send({
+            //     message : `Tutor with name ${name} not found`,
+            //     success : false,
+            //     status : 404
+            // })
         })
 }
 /*
@@ -189,21 +198,23 @@ const deactivateTutor = function(req,res,next){
     let id = req.params.id
 
     if(!ObjectId.isValid(id)){
-        res.status(400).send({
-            message : "This route requires a valid tutor Id",
-            success : false,
-            status : 400
-        })
+        throw new ErrorHandler(400,"This route requires a valid tutor Id")
+        // res.status(400).send({
+        //     message : "This route requires a valid tutor Id",
+        //     success : false,
+        //     status : 400
+        // })
     }
 
     Tutor.updateOne({_id : id},{$set :{active : 0}})
         .then((result) => {
             if(!result.n){
-                res.status(404).send({
-                    message : "Tutor with Id not found,Try Valid Id",
-                    success : false,
-                    status : 404
-                })
+                throw new ErrorHandler(404,"Tutor with Id not found,Try Valid Id")
+                // res.status(404).send({
+                //     message : "Tutor with Id not found,Try Valid Id",
+                //     success : false,
+                //     status : 404
+                // })
             }
             res.send({
                 message : "Tutor deactivated",
@@ -211,11 +222,12 @@ const deactivateTutor = function(req,res,next){
             })
         }).catch((err) => {
             console.log("could not deactivate tutor" + err)
-            res.status(404).send({
-                message : "Tutor with Id not found,Try Valid Id",
-                success : false,
-                status : 404
-            })
+            throw new ErrorHandler(404,"Tutor with Id not found,Try Valid Id")
+            // res.status(404).send({
+            //     message : "Tutor with Id not found,Try Valid Id",
+            //     success : false,
+            //     status : 404
+            // })
         })
 }
 
@@ -223,11 +235,12 @@ const getTutorById = function(req,res,next){
     let id = req.params.id
 
     if(!ObjectId.isValid(id)){
-        res.status(400).send({
-            message : "This route requires a valid tutor Id",
-            success : false,
-            status : 400
-        })
+        throw new ErrorHandler(400,"This route requires a valid tutor Id")
+        // res.status(400).send({
+        //     message : "This route requires a valid tutor Id",
+        //     success : false,
+        //     status : 400
+        // })
     }
     Tutor.findById(id)
     .populate('subjects')
@@ -239,11 +252,12 @@ const getTutorById = function(req,res,next){
         })
     }).catch((err) => {
         console.log('Could not find tutor by id' + err)
-        res.status(404).send({
-            message : "Tutor with id not found. Try valid id",
-            success : false,
-            status : 404
-        })
+        throw new ErrorHandler(404,"Tutor with id not found. Try valid id")
+        // res.status(404).send({
+        //     message : "Tutor with id not found. Try valid id",
+        //     success : false,
+        //     status : 404
+        // })
     })
 }
 

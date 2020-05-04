@@ -8,10 +8,13 @@ const AuthToken = require('../../models/authToken')
 //student model schema
 var studentSchema = mongoose.Schema({
 
-    // _id: {
-    //     'type': String,
-    //     'default': shortid.generate
-    //   },
+    username : {
+        type : String,
+        required : true,
+        trim : true,
+        lowercase : true,
+        unique : true
+    },
     first_name : {
         type : String,
         required : true,
@@ -20,7 +23,6 @@ var studentSchema = mongoose.Schema({
     } ,
     last_name : {
         type : String,
-        required : true,
         trim : true,
         lowercase : true
     },
