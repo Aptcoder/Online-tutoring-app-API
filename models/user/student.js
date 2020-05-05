@@ -8,10 +8,13 @@ const AuthToken = require('../../models/authToken')
 //student model schema
 var studentSchema = mongoose.Schema({
 
-    // _id: {
-    //     'type': String,
-    //     'default': shortid.generate
-    //   },
+    username : {
+        type : String,
+        required : true,
+        trim : true,
+        lowercase : true,
+        unique : true
+    },
     first_name : {
         type : String,
         required : true,
@@ -20,7 +23,6 @@ var studentSchema = mongoose.Schema({
     } ,
     last_name : {
         type : String,
-        required : true,
         trim : true,
         lowercase : true
     },
@@ -71,17 +73,17 @@ studentSchema.methods.generateToken = function(){
     let student = this
     console.log('student :' + student)
     let payload = {
-        owner : student.first_name,
+        owner : student.email,
         access : "student"
     }
     let options = {
-        expiresIn : "1d"
+        expiresIn : "7d"
     }
 
     let token = jwt.sign(payload,config.secreteKey,options);
 
     let newToken = new AuthToken({
-        owner : student.first_name,
+        owner : student.email,
         token : token,
         access : 'student'
     })
@@ -94,7 +96,7 @@ studentSchema.methods.toJSON = function(){
     let student = this
     let studentObject = student.toObject();
 
-    return _.pick(studentObject,['first_name','email'])
+    return _.pick(studentObject,['_id','first_name','email',])
 }
 
 studentSchema.statics.verifyToken = function(authToken){
@@ -109,7 +111,7 @@ studentSchema.statics.verifyToken = function(authToken){
         return Promise.reject(err)
     }
 
-    return Student.findOne({first_name : decoded.owner}).then((student) => {
+    return Student.findOne({email : decoded.owner}).then((student) => {
         return {
             student,
             decoded : decoded

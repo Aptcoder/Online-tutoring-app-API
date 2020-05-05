@@ -3,10 +3,13 @@ const Category = require('../../models/category')
 const bcrypt = require('bcrypt')
 
 
+//TODO- refactor error responses
+
 const signUpStudent = function(req,res,next){
     var first_name = req.body.first_name
     var last_name = req.body.last_name
     var email = req.body.email
+    var username = req.body.username
     var password = req.body.password
     
     if(password.length < 6){
@@ -18,9 +21,10 @@ const signUpStudent = function(req,res,next){
     }
 
     let studentObj = {
-        first_name ,
+        first_name,
         last_name,
         password,
+        username,
         email
     }
 
@@ -43,7 +47,7 @@ const signUpStudent = function(req,res,next){
         console.log('tutor successfully created')
         student.generateToken().then((authToken) => {
             res.cookie('token',authToken.token,{
-                maxAge : 86400000,
+                maxAge : 604800000,
                 httpOnly : true,
                 secure : false
             })
@@ -91,7 +95,7 @@ const loginStudent = function(req,res,next){
             console.log('password correct!')
             student.generateToken().then((authToken) => {
                 res.cookie('token',authToken.token,{
-                    maxAge : 36000000,
+                    maxAge : 604800000,
                     httpOnly : true,
                     secure : false
                 })

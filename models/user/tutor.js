@@ -8,11 +8,19 @@ const AuthToken = require('../../models/authToken')
 
 //schema for tutor model
 var tutorSchema = mongoose.Schema({
-
-    // _id: {
-    //     'type': String,
-    //     'default': shortid.generate
-    //   },
+    username : {
+        type : String,
+        required : true,
+        trim : true,
+        lowercase : true,
+        unique : true
+    },
+    active :{
+        type : Number,
+        //the value 1 is for active users and 0 for not
+        enum : [1,0],
+        default : 1
+    },
 
     first_name : {
         type : String,
@@ -22,7 +30,6 @@ var tutorSchema = mongoose.Schema({
     } ,
     last_name : {
         type : String,
-        required : true,
         trim : true,
         lowercase : true
     },
@@ -76,7 +83,7 @@ tutorSchema.methods.toJSON = function(){
     let tutor = this
     let tutorObject = tutor.toObject();
 
-    return _.pick(tutorObject,['fullname','subjects','email'])
+    return _.pick(tutorObject,['_id','first_name','subjects','email'])
 }
 
 
@@ -85,17 +92,17 @@ tutorSchema.methods.generateToken = function(){
     let tutor = this
     console.log('tutor:' + tutor )
     let payload = {
-        owner : tutor.first_name,
+        owner : tutor.email,
         access : "tutor"
     }
     let options = {
-        expiresIn : "1d"
+        expiresIn : "7d"
     }
 
     let token = jwt.sign(payload,config.secreteKey,options);
 
     let newToken = new AuthToken({
-        owner : tutor.first_name,
+        owner : tutor.email,
         token : token,
         access : 'tutor'
     })
@@ -116,7 +123,7 @@ tutorSchema.statics.verifyToken = function(authToken){
         return Promise.reject(err)
     }
 
-    return Tutor.findOne({first_name : decoded.owner}).then((tutor) => {
+    return Tutor.findOne({email : decoded.owner}).then((tutor) => {
         return {
             tutor : tutor,
             decoded : decoded

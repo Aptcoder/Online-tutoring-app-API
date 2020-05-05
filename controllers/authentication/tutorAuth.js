@@ -17,10 +17,10 @@ const tutorAuth = function(req,res,next){
             Tutor.verifyToken(authToken.token).then((auth) => {
                 req.user = auth.tutor
                 console.log(auth.decoded)
-                if(auth.decoded.access === 'tutor'){
+                if(auth.decoded.access === 'tutor' && auth.tutor.active){
                     return next()
                 }
-               returnres.status(403).send({
+               return res.status(403).send({
                 message : 'Oops! Not allowed',
                 success : false,
                 status : 403

@@ -38,8 +38,8 @@ const generalAuth = function(req,res,next){
         else if(authToken.access === 'tutor'){
             Tutor.verifyToken(authToken.token).then((auth) => {
                 req.user = auth.tutor
-                if(auth.decoded.access === 'tutor'){
-                    next()
+                if(auth.decoded.access === 'tutor'&& auth.tutor.active){
+                    return next()
                 }
                return res.status(403).send({
                 message : 'Oops! Not allowed',

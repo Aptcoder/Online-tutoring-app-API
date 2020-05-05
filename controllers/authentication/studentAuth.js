@@ -1,7 +1,7 @@
 const AuthToken = require('../../models/authToken');
 const Student = require('../../models/user/student')
 
-const tutorAuth = function(req,res,next){
+const studentAuth = function(req,res,next){
     let  token = req.cookies.token || req.header('x-auth')
 
     if(!token){
@@ -41,4 +41,4 @@ const tutorAuth = function(req,res,next){
     })
 }
 
-module.exports = tutorAuth
+module.exports = studentAuth
