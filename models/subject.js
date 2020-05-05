@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const shortId = require('shortid')
 const Tutor = require('../models/user/tutor')
+const _ = require('lodash')
 //schema for subject model 
 var subjectSchema = mongoose.Schema({
     name : {
