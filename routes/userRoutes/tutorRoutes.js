@@ -12,15 +12,14 @@ router.post('/login',controller.loginTutor)
 router.get('/',generalAuth,controller.getTutorsByName)
 router.post('/subject/register',tutorAuth,controller.registerSubject)
 
+ 
 
-/* route to get all tutor . admin access only
- */ 
- router.get('/',adminAuth,controller.getAllTutors)
+ //tutors can see all subjects then registered to take
+ router.get('/subjects',tutorAuth,controller.getTutorSubjects)
 
- //routes for getting tutor by id
- router.get('/:id',adminAuth,controller.getTutorById)
 
- //routes to deactivate tutor - admin access only
- router.put('/:id/deactivate',adminAuth,controller.deactivateTutor)
+ router.put('/subject',tutorAuth,controller.updateRegisteredSub)
+ router.delete('/subject/:id',tutorAuth,controller.deleteRegSub)
+ 
 
 module.exports = router

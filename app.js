@@ -11,6 +11,7 @@ const studentRouter = require('./routes/userRoutes/studentRoutes')
 const tutorRouter = require('./routes/userRoutes/tutorRoutes')
 const subjectRouter = require('./routes/subjectsRoutes')
 const lessonRouter = require('./routes/lessonRoutes')
+const adminRouter = require('./routes/userRoutes/adminRoutes')
 const categoryRouter = require('./routes/categoryRoutes')
 const {ErrorHandler,handleError } = require('./helper/error')
 mongoose.Promise = global.Promise
@@ -56,8 +57,8 @@ app.use('/student/lesson',studentRouter)
 app.use('/tutor',tutorRouter)
 app.use('/tutors',tutorRouter)
 //tutor routes - admin
-app.use('/admin/tutor',tutorRouter)
-app.use('/admin/tutors',tutorRouter)
+app.use('/admin/tutor',adminRouter)
+app.use('/admin/tutors',adminRouter)
 
 //subject routes handler
 app.use('/subject',subjectRouter)

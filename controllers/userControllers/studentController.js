@@ -75,6 +75,12 @@ const loginStudent = function(req,res,next){
     let email =  req.body.email;
     let password = req.body.password;
 
+    res.status(400).send({
+        message :"Email address and password is required",
+        status : 400,
+        success : false
+    })
+
     if(password.length < 6){
         res.status(400).send({
             message : "password must be at least six characters",
