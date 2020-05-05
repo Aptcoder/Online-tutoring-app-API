@@ -12,4 +12,5 @@ router.get('/:id',adminAuth,controller.getLessonById)
 router.put('/:id',adminAuth,controller.updateLesson)
 router.delete('/:id',adminAuth,controller.deleteLesson)
 
+
 module.exports = router

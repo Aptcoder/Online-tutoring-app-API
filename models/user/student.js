@@ -111,7 +111,7 @@ studentSchema.statics.verifyToken = function(authToken){
         return Promise.reject(err)
     }
 
-    return Student.findOne({first_name : decoded.owner}).then((student) => {
+    return Student.findOne({email : decoded.owner}).then((student) => {
         return {
             student,
             decoded : decoded

@@ -9,6 +9,7 @@ const signUpStudent = function(req,res,next){
     var first_name = req.body.first_name
     var last_name = req.body.last_name
     var email = req.body.email
+    var username = req.body.username
     var password = req.body.password
     
     if(password.length < 6){
@@ -20,9 +21,10 @@ const signUpStudent = function(req,res,next){
     }
 
     let studentObj = {
-        first_name ,
+        first_name,
         last_name,
         password,
+        username,
         email
     }
 

@@ -49,7 +49,9 @@ const getTutorsTakingSub = function(req,res,next){
     Category.findOne({name : category}).then((category) => {
         Subject.findOne({name : subject,category : category._id})
             .then((subject) => {
-                Tutor.find({subjects : subject._id}).then((tutors) => {
+                Tutor.find({subjects : subject._id})
+                .populate('subjects')
+                .then((tutors) => {
                     res.send({
                         tutors 
                     })

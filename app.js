@@ -7,7 +7,7 @@ const Category = require('./models/category')
 
 
 //my modules
-const studenRouter = require('./routes/userRoutes/studentRoutes')
+const studentRouter = require('./routes/userRoutes/studentRoutes')
 const tutorRouter = require('./routes/userRoutes/tutorRoutes')
 const subjectRouter = require('./routes/subjectsRoutes')
 const lessonRouter = require('./routes/lessonRoutes')
@@ -48,7 +48,9 @@ app.get('/',(req,res)=>{
 })
 
 //student routes handler
-app.use('/student',studenRouter)
+app.use('/student',studentRouter)
+//lesson routes student access
+app.use('/student/lesson',studentRouter)
 
 //tutor routes handler
 app.use('/tutor',tutorRouter)
@@ -70,8 +72,8 @@ app.use('/lessons',lessonRouter);
 //lessons routes -admin access
 app.use('/admin/lesson',lessonRouter);
 app.use('/admin/lessons',lessonRouter);
-//lesson routes student access
-app.use('/student/lesson',lessonRouter)
+
+
 
 app.use((err, req, res, next) => {
 

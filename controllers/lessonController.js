@@ -227,6 +227,7 @@ const deleteLesson = function(req,res,next){
 
 const studentBookLesson = function(req,res,next){
     let tutor = req.body.tutor
+    console.log(req.user)
     let student = req.user.username
     let date = req.body.date
     let time = req.body.time

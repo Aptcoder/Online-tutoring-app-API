@@ -9,6 +9,7 @@ const {ObjectId} = require('mongodb')
 const signUpTutor = function(req,res,next){
     var first_name = req.body.first_name
     var last_name = req.body.last_name
+    var username = req.body.username
     var password = req.body.password
     var email = req.body.email
     
@@ -25,6 +26,7 @@ const signUpTutor = function(req,res,next){
         first_name ,
         last_name,
         email,
+        username,
         password
     })
 
