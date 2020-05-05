@@ -170,9 +170,9 @@ const getTutorsByName = function(req,res,next){
 
     if(!name){
         // throw new ErrorHandler(401,"Url requires a query,'first_name' of tutor")
-        res.status(401).send({
+        res.status(400).send({
             message : "Url requires a query,'first_name' of tutor",
-            status : 401,
+            status : 400,
             success : false
         })
     }
@@ -180,8 +180,16 @@ const getTutorsByName = function(req,res,next){
         .sort({name : 'asc'})
         .populate('subjects')
         .then((tutors) => {
+            if(!tutors.length){
+                console.log(tutors.populated())
+                return res.status(401).send({
+                    message : "`Tutor with name ${name} not found`",
+                    status : 401,
+                    success : false
+                })
+            }
             res.send({
-                message : "subjects found",
+                message : "Tutor found",
                 success : true,
                 tutors
             })

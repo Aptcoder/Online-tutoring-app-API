@@ -10,6 +10,9 @@ const getSubjectsInCategory = function(req,res,next){
     variable cat -- category
 */
     Category.findOne({name : category}).then((cat) => {
+        if(!cat){
+            throw new Error
+        }
         Subject.find({category : cat._id})
         .populate('category','name')
         .then((subjects)=> {
@@ -36,6 +39,8 @@ const getSubjectsInCategory = function(req,res,next){
 const getCategories = function(req,res,next){
     Category.find({}).then((categories) => {
         res.send(({
+            message : "categories found",
+            success : true,
             categories
         }))
     }).catch((err) => next(err))

@@ -134,8 +134,16 @@ const getSubByName = function(req,res,next){
         .sort({name : 'asc'})
         .populate('category')
         .then((subjects) => {
+            if(!subjects.length){
+                console.log(subjects)
+                return res.status(404).send({
+                    message : `Subject with name ${name} not found`,
+                    success : false,
+                    status : 404
+                })
+            }
             res.send({
-                message : "subjects found",
+                message : "subject found",
                 success : true,
                 subjects
             })
