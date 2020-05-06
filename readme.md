@@ -1,5 +1,3 @@
-### API DOCUMENTATION
-
 # Online Tutoring App
 
 ### info : 
@@ -234,4 +232,137 @@
             }
             ```
             
+* **All users can sign in**
+    student login:
+    `POST` /student/login
+
+     > Note : no authentication is needed for this route
+     
+    **URL parameters**
+    `NONE`
+    
+    **Request Body parameters**  
+    
+     name |type   | description
+    --------|--------|---------
+    email |String | ***Required** : The email of the user 
+    passoword| String|***Required** : Users password
+    
+    Example request body : 
+            ```{
+                    "email" : "omilosamuel@gmail.com",
+                    "password" : "wonderful"
+                }```
             
+    **Responses :**
+* Success Response :
+    status : 200 Ok
+     content : 
+            ```{
+                "message" : "login successful",
+                "success" : true,
+                "name" : {student full name}
+                "id" : student id
+            }
+            ```
+     > A cookie containing auth token with key 'token' is sent and a header 'x-auth' also with value of auth token token is set
+* Error Response
+    status: 400 
+    This would be a response if the required parameter 'email','password' is not provided in request body
+    
+    content : 
+            ```{
+               message : "email and password is required",
+                success : false,
+                status : 400
+            }```
+            
+    it could also occur if the password provided is less than 6 characters 
+        content :
+             ```{
+               message : "password must be at least 6 characters",
+                success : false,
+                status : 400
+            }```
+    it could also be a response when an invalid email is used
+        content :
+             ```{
+               message : "Oops. Invalid email address",
+                success : false,
+                status : 400
+            }```
+        status : 401
+            This status code is typical when a wrong password is used
+        content :
+             ```{
+               message : "wrong password",
+                success : false,
+                status : 401
+            }```
+        
+    tutor login:
+    `POST` /tutor/login
+
+     > Note : no authentication is needed for this route
+     
+    **URL parameters**
+    `NONE`
+    
+    **Request Body parameters**  
+    
+     name |type   | description
+    --------|--------|---------
+    email |String | ***Required** : The email of the user 
+    passoword| String|***Required** : Users password
+    
+     Example request body : 
+            ```{
+                    "email" : "omilosamuel@gmail.com",
+                    "password" : "wonderful"
+                }```
+                
+     **Responses :**
+    * Success Response :
+    status : 200 Ok
+     content : 
+            ```{
+                "message" : "login successful",
+                "success" : true,
+                "name" : {Tutor full name}
+                "id" : student id
+            }
+            ```
+        > A cookie containing auth token with key 'token' is sent and a header 'x-auth' also with value of auth token token is set
+        
+    * Error Response
+    status: 400 
+    This would be a response if the required parameter 'email','password' is not provided in request body
+    content : 
+            ```{
+               message : "email and password is required",
+                success : false,
+                status : 400
+            }```
+        it could also occur if the password provided is less than 6 characters 
+        content :
+             ```{
+               message : "password must be at least 6 characters",
+                success : false,
+                status : 400
+            }```
+        it could also be a response when an invalid email is used
+        content :
+             ```{
+               message : "Oops. Invalid email address",
+                success : false,
+                status : 400
+            }```
+            
+        status : 401
+        This status code is typical when a wrong password is used
+        content :
+             ```{
+               message : "wrong password",
+                success : false,
+                status : 401
+            }```
