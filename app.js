@@ -14,6 +14,7 @@ const lessonRouter = require('./routes/lessonRoutes')
 const adminRouter = require('./routes/userRoutes/adminRoutes')
 const categoryRouter = require('./routes/categoryRoutes')
 const {ErrorHandler,handleError } = require('./helper/error')
+const generateTestData = require('./helper/test.-data');
 mongoose.Promise = global.Promise
 
 
@@ -26,23 +27,11 @@ mongoose.connect(url,{useNewUrlParser:true,useUnifiedTopology:true},(err) => {
 var app = express();
 app.use(bodyParser.json());
 app.use(cookieParser());
-var cat = new Category({
-    name : "sss",
-    full_name : "senior secondary school"
-})
+
+//generate test data
+generateTestData();
 
 
-cat.save().then((res) => {
-    console.log(res)
-}).catch(err => {
-    console.log("error : " + err)
-})
-
-
-var newCat = new Category({
-    name : "jss",
-    full_name : "junior seconndary school"
-})
 
 app.get('/',(req,res)=>{
     res.send('Hello world')

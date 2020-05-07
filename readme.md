@@ -366,3 +366,371 @@
                 success : false,
                 status : 401
             }```
+
+
+            ## Tutor Routes 
+* **Tutors can register to take a course in a category :**
+`POST` /tutor/subject/register 
+
+	  > Note : Tutor authentication is needed for this route. Tutor has to be signed in
+     
+    **URL parameters**
+    `NONE`
+    
+	**Request Body parameters**  
+    
+     name |type   | description
+    --------|--------|---------
+    subject |String | ***Required** : The subject to be registered
+    category| String|***Required** : The name of the category of the subject
+    
+    The category 'sss','jss' and 'primary' have  been created for testing purposes. 
+	
+	 Example request body : 
+	     ```{
+                    "subject" : "mathematics",
+                    "category" : "sss"
+                }```
+         
+    **Responses :**
+	* Success Response :
+    status : 200 Ok
+     content : 
+            ```{
+                message :  `${tutor.first_name} successfully registered ${subject.name}`,
+success :  true
+            }
+            ```
+     * Error Response
+    status: 400 
+    This would be a response if the required parameter 'subject','category' is not provided in request body
+		content : 
+            ```{
+             message :"subject and category is required to complete request" ,
+status :  400,
+success :  false
+     }```
+	   status: 404
+    This would be a response if the required parameter 'subject' is not found in database 
+		content : 
+            ```{
+             message :"subject is not found.Try mathematics" ,
+status :  404,
+success :  false
+     }```
+			
+		  This could also be a response if the required parameter 'category' is not found in database 
+		content : 
+            ```{
+             message :"category is not found.Try 'sss','primary' or 'jss" ,
+status :  404,
+success :  false
+     }```
+				
+* **Tutors can see all the subjects they registered :**
+`GET` /tutor/subjects
+
+	  > Note : Tutor authentication is needed for this route. Tutor has to be signed in
+     
+    **URL parameters**
+    `NONE`
+    
+    **Request body parameters**
+    `NONE`
+	
+	 **Responses :**
+	* Success Response :
+    status : 200 Ok
+     content : 
+            ```{
+              success :  true,
+subjects :  {tutor registered subjects details}
+            }
+            ```
+	
+	 * Error Response
+    status: 404 
+    This would be a response if the tutor  is not found in database {highly unlikely}
+		content : 
+            ```{
+             message :"Tutor,Subjects not found" ,
+status :  404,
+success :  false
+     }```
+	
+* **Tutors can update a subject they registered :**
+`PUT` /tutor/subject/:subject/category/:category
+
+	  > Note : Tutor authentication is needed for this route. Tutor has to be signed in
+     
+	 **URL parameters**
+	 
+    name |type   | description
+    --------|--------|---------
+    subject |String | ***Required** : The subject to be updated
+    category| String|***Required** : The name of the category of the subject to be updated
+    
+	**Request Body parameters**  
+    
+     name |type   | description
+    --------|--------|---------
+    name |String | ***Required** : The new name of the subject
+    category| String|***Required** : The new name of the category of the subject
+    
+    The category 'sss','jss' and 'primary' have  been created for testing purposes. 
+	
+	 Example request body : 
+	     ```{
+                    "name" : "mathematics",
+                    "category" : "sss"
+                }```
+         
+         > Tutors can only make changes to subject they have registered
+         
+         
+    **Responses :**
+	* Success Response :
+    status : 200 Ok
+     content : 
+            ```{
+                message :  `subject updated`,
+success :  true
+            }
+            ```
+     * Error Response
+    status: 400 
+    This would be a response if the required parameter 'name','category' is not provided in request body
+		content : 
+            ```{
+             message :"subject and category is required to complete request" ,
+status :  400,
+success :  false
+     }```
+	   status: 404
+    This would be a response if the required parameter 'subject' is not found in database 
+		content : 
+            ```{
+             message :"subject is not found.Try mathematics" ,
+status :  404,
+success :  false
+     }```
+			
+		  This could also be a response if the required parameter 'category' in url or body is not found in database 
+		content : 
+            ```{
+             message :"category is not found.Try 'sss','primary' or 'jss" ,
+status :  404,
+success :  false
+     }```
+	
+	Status : 403 
+	This could be a response if the tutor did not resgister the course 
+	content : 
+            ```{
+             message :Oops. Not allowed ,
+status :  403,
+success :  false
+     }```
+	
+* **Tutors can delete a subject they registered :**
+`DELETE` /tutor/subject/:id
+
+	  > Note : Tutor authentication is needed for this route. Tutor has to be signed in
+     
+	 **URL parameters**
+     name |type   | description
+    --------|--------|---------
+    id |ObjectId  | ***Required** : The id of the subject to be unregistered by tutor
+    
+    **Request body parameters**
+    `NONE`
+   **Responses :**
+	* Success Response :
+    status : 200 Ok
+     content : 
+            ```{
+                message :  `subject deleted`,
+success :  true
+            }
+            ```
+	* Error Response
+    status: 400 
+    This would be a response if the required parameter Id is not provided as a url parameter or the id is not valid 
+		content : 
+            ```{
+             message :  "This route requires an Id,try a good one",
+success :  false,
+status :  400    }```
+	   status: 404
+    This would be a response if the required parameter 'subject' is not found in database 
+		content : 
+            ```{
+             message :"subject is not found.Try mathematics" ,
+status :  404,
+success :  false
+     }```
+	
+		Status : 403 
+	This could be a response if the tutor did not register the course 
+	content : 
+            ```{
+             message :Oops. Not allowed ,
+status :  403,
+success :  false
+     }```
+	
+## Student Routes 
+* **Students can sign up :**
+`POST` /student/signup
+
+	  > Note : No authentication is needed for this route. 
+     
+    **URL parameters**
+    `NONE`
+    
+     **Request body parameters**
+     name |type   | description
+    --------|--------|---------
+    first_name|String  | ***Required** : The first name of user
+    last_name|String|  : The first name of user
+    email|String  | ***Required** : The email address  of user
+    username|String  | ***Required** : The username of user
+    password|String  | ***Required** : The first name of user
+
+	 **Responses :**
+	* Success Response :
+    status : 201 
+     content : 
+            ```{
+message :  "user(student) successfully created",
+success :  true,
+name :  student.fullname,
+id :  student._id           }
+            ```
+	> A cookie containing auth token with key 'token' is sent and a header 'x-auth' also with value of auth token token is set
+	
+	* Error Response
+    status: 400 
+    This would be a response if the password provided is less than 6 characters 
+		content : 
+            ```{
+            message :  "password must be at least six characters",
+success :  false,
+status :  400  }```
+	   status: 400
+    This would be a response if the email is already in use or last name not provided 
+		content : 
+            ```{
+          message :  "email address already exists",
+success :  false,
+status :  400
+     }```
+
+
+* **Students can book lesson :**
+`POST` /student/lesson/book
+
+	  > Note : Student authentication is needed for this route. Student has to be signed in
+     
+    **URL parameters**
+    `NONE`
+
+	**Request body parameters**
+     name |type   | description
+    --------|--------|---------
+    tutor|String  | ***Required** : The username of the tutor to take the lesson
+    Date |String| ***Required** : the date of the lesson. format is "YYYY:MM:DD"
+    time|String  | ***Required** : The time of the lesson. Format is "HH:SS"
+
+ **Responses :**
+* Success Response :
+    status : 200 
+     content : 
+            ```{
+message :  'Lesson booked',
+success :  true       }
+            ```
+
+* Error Response
+ status: 400
+    This would be a response if the date or time is not provided
+		content : 
+            ```{
+            message :  "date and time is required",
+success :  false,
+status :  400 }```
+
+
+
+    status: 404 
+    This would be a response if the Tutor is not found
+		content : 
+            ```{
+            message :  "Tutor not found",
+success :  false,
+status :  404 }```
+
+**Students can get all tutors taking a course in a category :**
+
+`GET` /category/:category/subject/:subject/tutors
+
+ > Note : Tutor authentication is needed for this route. Tutor has to be signed in
+     
+ **URL parameters**
+name|type | description
+ --------|--------|---------
+subject |String | ***Required** : The subject
+ category| String|***Required** : The category
+	    
+**Request body parameters**
+`NONE`
+
+
+ **Responses :**
+* Success Response :
+    status : 200 
+     content : 
+            ```{
+tutors      }
+            ```
+	
+	* Error Response
+ status: 404
+    This would be a response if the subject provided is not found
+		content : 
+            ```{
+            message :  "subject not found. Try 'mathematics'",
+success :  false,
+status :  404 }```
+status: 404
+    This would be a response if the category or subject provided is not found
+		content : 
+            ```{
+          message :  "category not found. Try 'sss','jss' or 'primary'",
+success :  false,
+status :  404}```
+
+
+## Admin Routes : 
+* **Admin can create subjects under categories 'sss',primary' and 'jss'**
+`POST` /subject/create
+ > Note : Admin authentication is needed for this route
+     
+**URL parameters**
+`NONE`
+ **Request Body parameters**
+name|type | description
+ --------|--------|---------
+name|String | ***Required** : The subject name
+ category| String|***Required** : The category name
+	  
+	  
+ **Responses :**
+* Success Response :
+    status : 201
+     content : 
+            ```{
+message :  "subject successfully created",
+success :  false   }
+            ```
+	

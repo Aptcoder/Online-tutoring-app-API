@@ -234,7 +234,11 @@ const studentBookLesson = function(req,res,next){
 
 
     if(!date || !time){
-        throw new ErrorHandler(400,"Date and time is required")
+        res.status(400).send({
+            message : "date and time is required",
+            success : false,
+            status : 400
+        })
     }
     /*
     Find tutor and then find student and use them to create the lesson

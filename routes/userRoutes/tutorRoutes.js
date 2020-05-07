@@ -18,7 +18,7 @@ router.post('/subject/register',tutorAuth,controller.registerSubject)
  router.get('/subjects',tutorAuth,controller.getTutorSubjects)
 
 
- router.put('/subject',tutorAuth,controller.updateRegisteredSub)
+ router.put('/subject/:subject/category/:category',tutorAuth,controller.updateRegisteredSub)
  router.delete('/subject/:id',tutorAuth,controller.deleteRegSub)
  
 
