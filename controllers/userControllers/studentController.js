@@ -54,7 +54,8 @@ const signUpStudent = function(req,res,next){
             res.status(201).set('x-auth',authToken.token).send({
                 message : "user(student) successfully created",
                 success : true,
-                name : student.fullname
+                name : student.fullname,
+                id : student._id
             })
         }).catch((err) => {
             console.log('error generating token' + err);
@@ -75,12 +76,14 @@ const loginStudent = function(req,res,next){
     let email =  req.body.email;
     let password = req.body.password;
 
-    res.status(400).send({
-        message :"Email address and password is required",
-        status : 400,
-        success : false
-    })
-
+    if(!email || !password){
+        res.status(400).send({
+            message :"Email address and password is required",
+            status : 400,
+            success : false
+        })
+    }
+   
     if(password.length < 6){
         res.status(400).send({
             message : "password must be at least six characters",
@@ -108,7 +111,8 @@ const loginStudent = function(req,res,next){
                 res.status(200).set('x-auth',authToken.token).send({
                     message : "login successful",
                     success : true,
-                    name : student.fullname
+                    name : student.fullname,
+                    id : student._id
                 })
             }).catch((err) => {
                 console.log('error generating token' + err);
