@@ -1,3 +1,5 @@
+API is available at : https://young-chamber-31283.herokuapp.com/v1/
+
 # Online Tutoring App
 
 **Considerations :** An admin login detail :
@@ -14,7 +16,7 @@ Trying to access a route without proper authentication would give a 403 status
     All requests and responses with this API use the JSON format.
     Authentication is with JWT tokens which are persisted as cookies to ensure good user experience. 
     
-`base path`  : 
+`base path`  : https://young-chamber-31283.herokuapp.com/v1/
 #### Endpoints :
 * **All users can retrieve a subject in a category by id**
     `GET` /category/:category/subject/:id
