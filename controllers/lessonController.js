@@ -199,7 +199,7 @@ const deleteLesson = function(req,res,next){
     if(!ObjectId.isValid(id)){
         // throw new ErrorHandler(400,"This route requires a valid tutor Id")
         res.status(400).send({
-            message : "This route requires a valid tutor Id",
+            message : "This route requires a valid Id",
             success : false,
             status : 400
         })

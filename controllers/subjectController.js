@@ -25,7 +25,8 @@ const createSubject = function(req,res,next){
         newSubject.save().then((subject) => {
             res.status(201).send({
                 message : "subject successfully created",
-                success : false
+                success : false,
+                subject
             })
         }).catch((err) => {
             console.log('could not save subject' + err)

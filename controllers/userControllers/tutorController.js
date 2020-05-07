@@ -41,7 +41,8 @@ const signUpTutor = function(req,res,next){
             res.status(201).set('x-auth',authToken.token).send({
                 message : "user(tutor) successfully created",
                 success : true,
-                name : tutor.fullname
+                name : tutor.fullname,
+                _id : tutor._id
             })
         }).catch((err) => {
             console.log('error generating token' + err);

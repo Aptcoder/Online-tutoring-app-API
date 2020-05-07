@@ -1,5 +1,13 @@
 # Online Tutoring App
 
+**Considerations :** An admin login detail :
+        ```{
+            "email" : "omilosamuel@gmail.com",
+            "password" : "wonderful"
+        }```
+
+Trying to access a route without proper authentication would give a 403 status
+
 ### info : 
     title : Online tutoring app
     description : The online tutoring app API is built for the task 4 of the node js track of start.ng 2020.
@@ -711,26 +719,608 @@ success :  false,
 status :  404}```
 
 
-## Admin Routes : 
-* **Admin can create subjects under categories 'sss',primary' and 'jss'**
+## Admin Routes :
+
+*  **Admin can create subjects under categories 'sss',primary' and 'jss'**
+
 `POST` /subject/create
- > Note : Admin authentication is needed for this route
-     
+
+> Note : Admin authentication is needed for this route
+
+**URL parameters**
+
+`NONE`
+
+**Request Body parameters**
+
+name|type | description
+--------|--------|---------
+name|String | ***Required** : The subject name
+category| String|***Required** : The category name
+
+**Responses :**
+* Success Response :
+status : 201
+content :
+```{
+message : "subject successfully created",
+success : false }
+```
+
+* Error Response
+status : 400
+this could be a response  if there is no name or category provided.
+content :
+```{
+message : "subject successfully created",
+success : false }
+```
+status : 400
+this could be a response  if the category provided is not available 
+content :
+```{
+message : "subject successfully created",
+success : false, subject
+}
+```
+
+**Admin can update a subject in a category by Id**
+`PUT` /category/:category/subject/:id
+
+> Admin authentication is required for this route.
+
+admin routes can be tested with login details : 
+	```
+	email : "omilosamauel@gmail.com",
+	password : "wonderful"}```
+**URL parameters**
+
+name |type | description
+--------|--------|---------
+id|Object| ***Required** : Theid of the subject to be updated
+category| String|***Required** : The name of the category of the subject to be updated
+
+**Request Body parameters**
+
+name |type | description
+--------|--------|---------
+name |String | ***Required** : The new name of the subject
+category| String|***Required** : The new name of the category of the subject
+The category 'sss','jss' and 'primary' have been created for testing purposes.
+Example request body :
+	```{
+	"name" : "mathematics",
+	"category" : "sss"
+	}```
+> Tutors can only make changes to subject they have registered
+
+**Responses :**
+* Success Response :
+status : 200 Ok
+content :
+	```{
+	message : `update successful`,
+	success : true
+	}```
+
+* Error Response
+status: 400
+This would be a response if the required parameter id is not valid or not provided 
+content :
+		```{
+		message :  "This url requires a valid Id for the subject",
+	success :  false,
+	status :  400
+		}```
+status: 404
+This would be a response if the required parameter 'id for the subject is not found 
+content :
+	```{
+	message :"subject is not found.Try a valid Id"
+	status : 404,
+	success : false
+	}```
+This could also be a response if the required parameter 'category' in url or body is not found in database
+content :
+	```{
+	message :"category is not found.Try 'sss','primary' or 'jss" ,
+	status : 404,
+	success : false
+	}```
+
+**Admin can delete subjects by Id**
+`DELETE` category/:category/subject/:id
+
+> Admin auth is needed for this route
+> 
+**URL parameters**
+name |type | description
+--------|--------|---------
+id |ObjectId | ***Required** : The id of the subject to be unregistered by tutor
+category| String|***Required** : The name of the category of the subject
+
+**Request body parameters**
+`NONE`
+**Responses :**
+* Success Response :
+status : 200 Ok
+content :
+```{
+message : `subject found and deleted"
+success : true
+}
+```
+
+* Error Response
+status: 400
+This would be a response if the required parameter id is not valid or not provided 
+content :
+		```{
+		message :  "This url requires a valid Id for the subject",
+	success :  false,
+	status :  400
+		}```
+status: 404
+This would be a response if the required parameter 'id for the subject is not found 
+content :
+	```{
+	message :"subject is not found.Try a valid Id"
+	status : 404,
+	success : false
+	}```
+This could also be a response if the required parameter 'category' in url or body is not found in database
+content :
+	```{
+	message :"category is not found.Try 'sss','primary' or 'jss" ,
+	status : 404,
+	success : false
+	}```
+
+**Admin can update a category :**
+`PUT` /category/:category
+
+> Admin authentication is required for this route.
+
+admin routes can be tested with login details : 
+	```
+	email : "omilosamauel@gmail.com",
+	password : "wonderful"}```
+
+**URL parameters**
+name |type | description
+--------|--------|---------
+category|String| ***Required** : The name of the category to be updated
+
+**Request Body parameters**
+
+name |type | description
+--------|--------|---------
+name |String | ***Required** : The new name of the category
+full_name |String|***Required** : The new full name of the category
+
 **URL parameters**
 `NONE`
- **Request Body parameters**
-name|type | description
- --------|--------|---------
-name|String | ***Required** : The subject name
- category| String|***Required** : The category name
-	  
-	  
- **Responses :**
+
+**Responses :**
 * Success Response :
-    status : 201
-     content : 
-            ```{
-message :  "subject successfully created",
-success :  false   }
-            ```
-	
+status : 200 Ok
+content :
+```{
+message : `category updated successfully"
+success : true
+}
+```
+
+* Error Response
+status: 400
+This would be a response if the required parameter name and full name is not provided
+content :
+		```{
+		message :  "name and full_name is required"
+	success :  false,
+	status :  400
+		}```
+Status : 404
+This could also be a response if the required parameter 'category' in url or body is not found in database
+content :
+	```{
+	message :"category is not found.Try 'sss','primary' or 'jss" ,
+	status : 404,
+	success : false
+	}```
+
+*  **Admin can delete a categoryr:**
+`DELETE` /category/:category
+> Note : Admin authentication needed for this route    
+
+**URL parameters**
+name |type | description
+--------|--------|---------
+category|String| ***Required** : The name of the category to be deleted
+
+**Request Body parameters**
+`NONE`
+
+**Responses :**
+* Success Response :
+status : 200 Ok
+content :
+```{
+message : `category updated successfully"
+success : true
+}
+```
+* Error Response
+Status : 404
+This could also be a response if the required parameter 'category' in url or body is not found in database
+content :
+	```{
+	message :"category is not found.Try 'sss','primary' or 'jss" ,
+	status : 404,
+	success : false
+	}```
+
+
+**Admin can retrieve all tutors :**
+`GET` admin/tutors
+
+> Note : Admin authentication needed for this route    
+
+**Request Body parameters**
+`NONE`
+
+**URL parameters**
+`NONE`
+
+**Responses :**
+* Success Response :
+status : 200 Ok
+content :
+```{
+message :  "Tutors found",
+success :  true,
+tutors
+}
+```
+* Error Response
+we dont expect any errors from this route but if there should be,its probably a server error
+
+
+**Admin can retrieve tutors by Id**
+`GET` admin/tutors/:id
+
+> Note : Admin authentication needed for this route    
+
+**Request Body parameters**
+`NONE`
+
+**URL parameters**
+name |type | description
+--------|--------|---------
+id |ObjectId | ***Required** : The id of the tutor
+
+**Responses :**
+* Success Response :
+status : 200 Ok
+content :
+```{
+message :  'Tutor found',
+success :  true,
+tutor
+}
+```
+* Error Response
+status: 400
+This would be a response if the required parameter Id is not provided as a url parameter or the id is not valid
+content :
+	```{
+	message : "This route requires an Id,try a good one",
+	success : false,
+	status : 400 }```
+status: 404
+This would be a response if the required  'tutor is not  found in database
+content :
+	```{
+	message :  "Tutor with id not found. Try valid id",
+	status :  404,
+	success :  false
+	}```
+
+** Admin can deactivate tutors by Id**
+
+`PUT` admin/tutors/:id/deactivate
+
+> Note : Admin authentication needed for this route    
+> Note : The tutor is only deactivated and not permanently deleted
+
+**Request Body parameters**
+`NONE`
+
+**URL parameters**
+name |type | description
+--------|--------|---------
+id |ObjectId | ***Required** : The id of the tutor
+
+**Responses :**
+* Success Response :
+status : 200 Ok
+content :
+```{
+message :  "Tutor deactivated",
+success :  true
+}
+```
+* Error Response
+status: 400
+This would be a response if the required parameter Id is not provided as a url parameter or the id is not valid
+content :
+	```{
+	message : "This route requires an Id,try a good one",
+	success : false,
+	status : 400 }```
+status: 404
+This would be a response if the required  'tutor is not  found in database
+content :
+	```{
+	message :  "Tutor with id not found. Try valid id",
+	status :  404,
+	success :  false
+	}```
+
+*  **Admin  can book lesson :**
+
+`POST` /student/lesson/book
+
+> Note : Admin authentication needed for this route 
+
+**URL parameters**
+`NONE`
+**Request body parameters**
+name |type | description
+--------|--------|---------
+tutor|String | ***Required** : The username of the tutor to take the lesson
+Date |String| ***Required** : the date of the lesson. format is "YYYY:MM:DD"
+time|String | ***Required** : The time of the lesson. Format is "HH:SS"
+student|String|***Required** : The username of the Student to take the lesson
+
+**Responses :**
+* Success Response :
+status : 200
+content :
+```{
+message : 'Lesson booked',
+success : true }
+```
+* Error Response
+status: 400
+This would be a response if the date or time is not provided
+content :
+	```{
+	message : "date and time is required",
+	success : false,
+	status : 400 }```
+
+status: 404
+This would be a response if the Tutor is not found
+content :
+	```{
+	message : "Tutor not found",
+	success : false,
+	status : 404 }```
+status: 404
+This would be a response if the student is not found
+content :
+	```{
+	message : "student not found",
+	success : false,
+	status : 404}```
+
+
+**Admin can retrieve all Lessons**
+`GET` admin/lessons
+
+> Note : Admin authentication needed for this route    
+**Request Body parameters**
+`NONE`
+
+**URL parameters**
+`NONE`
+
+**Responses :**
+* Success Response :
+status : 200 Ok
+content :
+```{
+message :  " Lessons found",
+success :  true,
+lessons
+}
+```
+* Error Response
+we dont expect any errors from this route but if there should be,its probably a server error
+
+**Admin can retrieve lessons by id**
+`GET` admin/lessons/:id
+
+> Note : Admin authentication needed for this route    
+
+**Request Body parameters**
+`NONE`
+
+**URL parameters**
+name |type | description
+--------|--------|---------
+id |ObjectId | ***Required** : The id of the lesson
+
+**Responses :**
+* Success Response :
+status : 200 Ok
+content :
+```{
+message :  'Lesson found',
+success :  true,
+Lesson
+}
+```
+* Error Response
+status: 400
+This would be a response if the required parameter Id is not provided as a url parameter or the id is not valid
+content :
+	```{
+	message : "This route requires an Id,try a good one",
+	success : false,
+	status : 400 }```
+status: 404
+This would be a response if the required  'tutor is not  found in database
+content :
+	```{
+	message :  "Lesson  with id not found. Try valid id",
+	status :  404,
+	success :  false
+	}```
+
+
+*  **Admin  can update a lesson**
+
+`PUT` /admin/lesson/:id
+
+> Note : Admin authentication needed for this route 
+
+**URL parameters**
+name |type | description
+--------|--------|---------
+id |ObjectId | ***Required** : The id of the lesson to be updated
+
+**Request body parameters**
+name |type | description
+--------|--------|---------
+tutor|String | ***Required** : The username of the tutor to take the lesson
+Date |String| ***Required** : the date of the lesson. format is "YYYY:MM:DD"
+time|String | ***Required** : The time of the lesson. Format is "HH:SS"
+student|String|***Required** : The username of the Student to take the lesson
+
+**Responses :**
+* Success Response :
+status : 200
+content :
+```{
+message : 'Lesson booked',
+success : true }
+```
+* Error Response
+status: 400
+This would be a response if the date or time is not provided
+content :
+	```{
+	message : "date and time is required",
+	success : false,
+	status : 400 }```
+status: 400
+This would be a response if the required parameter Id is not provided as a url parameter or the id is not valid
+content :
+	```{
+	message : "This route requires an Id,try a good one",
+	success : false,
+	status : 400 }```
+status: 404
+This would be a response if the Tutor is not found
+content :
+	```{
+	message : "Tutor not found",
+	success : false,
+	status : 404 }```
+status: 404
+This would be a response if the student is not found
+content :
+	```{
+	message : "student not found",
+	success : false,
+	status : 404}```
+
+This would be a response if the lesson with id does not exist
+content :
+	```{
+	message : "Lesson not found",
+	success : false,
+	status : 404}```
+
+*  **Tutors can sign up :**
+
+`POST` /tutor/signup
+
+> Note : No authentication is needed for this route.
+> Note : Admin role can be given to tutors only from the database.
+
+**URL parameters**
+`NONE`
+**Request body parameters**
+name |type | description
+--------|--------|---------
+first_name|String | ***Required** : The first name of user
+last_name|String| : The first name of user
+email|String | ***Required** : The email address of user
+username|String | ***Required** : The username of user
+password|String | ***Required** : The first name of user
+**Responses :**
+* Success Response :
+status : 201
+content :
+```{
+message :  "user(tutor) successfully created",
+success :  true,
+name :  tutor.fullname,
+_id :  tutor._id }
+```
+> A cookie containing auth token with key 'token' is sent and a header 'x-auth' also with value of auth token token is set
+* Error Response
+status: 400
+This would be a response if the password provided is less than 6 characters
+content :
+	```{
+	message : "password must be at least six characters",
+	success : false,
+	status : 400 }```
+status: 400
+This would be a response if the email is already in use or last name not provided
+content :
+	```{
+	message : "email address already exists",
+	success : false,
+	status : 400
+	}```
+
+*  **Admin can delete a lesson**
+`DELETE` /admin/lesson/:id
+> Note : Tutor authentication is needed for this route. Tutor has to be signed in
+> 
+**URL parameters**
+name |type | description
+--------|--------|---------
+id |ObjectId | ***Required** : The id of the lesson to be deleted
+**Request body parameters**
+`NONE`
+**Responses :**
+* Success Response :
+status : 200 Ok
+content :
+```{
+message : `lesson deleted`,
+success : true
+}
+```
+* Error Response
+status: 400
+This would be a response if the required parameter Id is not provided as a url parameter or the id is not valid
+content :
+	```{
+	message : "This route requires an Id,try a good one",
+	success : false,
+	status : 400 }```
+status: 404
+This would be a response if the required lesson is not found in the database
+content :
+```{
+message :  "Lesson not found",
+success :  false,
+status :  404
+}```
