@@ -1,12 +1,13 @@
 # Online Tutoring App
 
-**Considerations :** An admin login detail :
+**Considerations :** 
+* An admin login detail :
         ```{
             "email" : "omilosamuel@gmail.com",
             "password" : "wonderful"
         }```
-
-Trying to access a route without proper authentication would give a 403 status
+    Trying to access a route without proper authentication would give a 403 status
+* All routes require authentication,Every user must be signed in to access the routes
 
 ### info : 
     title : Online tutoring app
@@ -18,7 +19,7 @@ Trying to access a route without proper authentication would give a 403 status
 #### Endpoints :
 * **All users can retrieve a subject in a category by id**
     `GET` /category/:category/subject/:id
-    > Note : no authentication is needed for this route
+    > Note : no specific authorization is needed for this route
     
     To allow for testing purposes the category 'sss' has been created 
 
@@ -68,7 +69,7 @@ Trying to access a route without proper authentication would give a 403 status
             ```
 * **All users can retrieve the subjects in a category**
     `GET` /category/:category/subjects
-    > Note : no authentication is needed for this route
+    > Note : no specific authorization is needed for this route
     
     To allow for testing purposes the category 'sss' has been created 
             
@@ -106,7 +107,7 @@ Trying to access a route without proper authentication would give a 403 status
     
 * **All users can retrieve the categoies available**
     `GET` /categories/
-    > Note : no authentication is needed for this route
+    > Note : no specific authorization is needed for this route
     
     **URL parameters**
     `NONE`
@@ -139,7 +140,7 @@ Trying to access a route without proper authentication would give a 403 status
             
 * **All users can search for a subject by name**
     `GET` /subjects?name=[name]
-    > Note : no authentication is needed for this route
+    > Note : no specific authorization is needed for this route
     
     The returned subjects are arranged in ascending order
     **URL parameters**
@@ -191,7 +192,7 @@ Trying to access a route without proper authentication would give a 403 status
             
 * **All users can search for a subject by name**
     `GET` /tutors?first_name=[first_name]
-    > Note : no authentication is needed for this route
+    > Note : no specific authorization is needed for this route
     
     The returned tutors are arranged in ascending order
     **URL parameters**
@@ -244,7 +245,7 @@ Trying to access a route without proper authentication would give a 403 status
     student login:
     `POST` /student/login
 
-     > Note : no authentication is needed for this route
+     > Note : no specific authorization is needed for this route
      
     **URL parameters**
     `NONE`
@@ -311,7 +312,7 @@ Trying to access a route without proper authentication would give a 403 status
     tutor login:
     `POST` /tutor/login
 
-     > Note : no authentication is needed for this route
+     > Note : no specific authorization is needed for this route
      
     **URL parameters**
     `NONE`

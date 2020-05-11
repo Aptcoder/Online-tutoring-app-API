@@ -17,7 +17,6 @@ categorySchema = mongoose.Schema({
 
 /*
 delete subjects that refer to this category
-
 */
 categorySchema.pre('deleteOne', function(next){
     let catId = this.getQuery()["_id"];

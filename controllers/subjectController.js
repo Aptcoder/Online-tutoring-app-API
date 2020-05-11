@@ -5,6 +5,15 @@ let {ObjectID} = require('mongodb')
 
 //TODO - refactor error responses...
 
+
+// 
+/*
+    @params req - request parameter
+    @params next - call back function
+    @params req - request parameter
+
+*/
+// middleware function for creating a subjects
 const createSubject = function(req,res,next){
     let name = req.body.name;
     let category = req.body.category
