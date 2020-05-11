@@ -18,7 +18,7 @@ const generateTestData = require('./helper/test.-data');
 mongoose.Promise = global.Promise
 
 
-var url = 'mongodb://localhost:27017/OnlineTutoring'
+var url = 'mongodb://localhost:27017/OnlineTutoring' ||
 mongoose.connect(url,{useNewUrlParser:true,useUnifiedTopology:true},(err) => {
     if(err){
         console.log("Error connecting to database :" + err)
