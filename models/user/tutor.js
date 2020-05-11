@@ -50,8 +50,6 @@ var tutorSchema = mongoose.Schema({
         minlength : [6,"password must not be less than six characters"]
     },
 
-    subjects : [{type : mongoose.Schema.Types.ObjectId , ref : 'Subject' ,unique: true}],
-
     role: {
         type : String,
         enum : ["admin","tutor"],

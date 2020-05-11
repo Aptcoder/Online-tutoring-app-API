@@ -15,7 +15,13 @@ const signUpTutor = function(req,res,next){
     var email = req.body.email
     
 
-    
+    if(!email || !password || !first_name || !username){
+        res.status(400).send({
+            message :"Oops,seems like you missed something required",
+            status : 400,
+            success : false
+        })
+    }
 
 
     if(password.length < 6){

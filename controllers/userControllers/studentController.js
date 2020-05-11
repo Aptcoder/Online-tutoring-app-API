@@ -12,6 +12,16 @@ const signUpStudent = function(req,res,next){
     var username = req.body.username
     var password = req.body.password
     
+    
+    if(!email || !password || !first_name || !username){
+        res.status(400).send({
+            message :"Oops,seems like you missed something required",
+            status : 400,
+            success : false
+        })
+    }
+
+
     if(password.length < 6){
         res.status(400).send({
             message : "password must be at least six characters",

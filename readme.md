@@ -633,7 +633,14 @@ status :  400  }```
 success :  false,
 status :  400
      }```
-
+        status: 400
+    This would be a response if one of the required parameters is missing
+		content : 
+            ```{
+          message :  "Oops.seems like you missed someting required",
+success :  false,
+status :  400
+     }```
 
 * **Students can book lesson :**
 `POST` /student/lesson/book
@@ -1288,7 +1295,14 @@ content :
 	success : false,
 	status : 400
 	}```
-
+      status: 400
+    This would be a response if one of the required parameters is missing
+		content : 
+            ```{
+          message :  "Oops.seems like you missed someting required",
+success :  false,
+status :  400
+     }```
 *  **Admin can delete a lesson**
 `DELETE` /admin/lesson/:id
 > Note : Tutor authentication is needed for this route. Tutor has to be signed in
