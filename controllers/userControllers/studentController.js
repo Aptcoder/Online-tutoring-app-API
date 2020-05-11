@@ -74,7 +74,7 @@ const signUpStudent = function(req,res,next){
     }).catch((err) => {
         console.log('could not save student :' + err);
         res.status(400).send({
-            message : "email address already exists",
+            message : "email or username already exists",
             success : false,
             status : 400
         })

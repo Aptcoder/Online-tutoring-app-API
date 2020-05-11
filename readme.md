@@ -626,10 +626,10 @@ id :  student._id           }
 success :  false,
 status :  400  }```
 	   status: 400
-    This would be a response if the email is already in use or last name not provided 
+    This would be a response if the email or username is already in use or last name not provided 
 		content : 
             ```{
-          message :  "email address already exists",
+          message :  "email or username already exists",
 success :  false,
 status :  400
      }```
@@ -1288,10 +1288,10 @@ content :
 	success : false,
 	status : 400 }```
 status: 400
-This would be a response if the email is already in use or last name not provided
+This would be a response if the email or username is already in use or last name not provided
 content :
 	```{
-	message : "email address already exists",
+	message : "email or username already exists",
 	success : false,
 	status : 400
 	}```

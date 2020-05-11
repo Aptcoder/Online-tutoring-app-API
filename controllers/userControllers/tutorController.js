@@ -58,7 +58,7 @@ const signUpTutor = function(req,res,next){
     }).catch((err) => {
         console.log('could not save tutor :' + err);
         res.status(400).send({
-            message :"email address already exists",
+            message :"email or username already exists",
             status : 400,
             success : false
         })
