@@ -8,6 +8,7 @@
         }```
     Trying to access a route without proper authentication would give a 403 status
 * All routes require authentication,Every user must be signed in to access the routes
+* Users can surf through this API documentation by making a search with keyword of funtionality required
 
 ### info : 
     title : Online tutoring app
