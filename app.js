@@ -18,7 +18,10 @@ const generateTestData = require('./helper/test.-data');
 mongoose.Promise = global.Promise
 
 
-var url = 'mongodb://localhost:27017/OnlineTutoring' ||
+
+
+var url = process.env.MONGODB_URL || 'mongodb://localhost:27017/OnlineTutoring'
+
 mongoose.connect(url,{useNewUrlParser:true,useUnifiedTopology:true},(err) => {
     if(err){
         console.log("Error connecting to database :" + err)
@@ -38,30 +41,30 @@ app.get('/',(req,res)=>{
 })
 
 //student routes handler
-app.use('/student',studentRouter)
+app.use('/v1/student',studentRouter)
 //lesson routes student access
-app.use('/student/lesson',studentRouter)
+app.use('/v1/student/lesson',studentRouter)
 
 //tutor routes handler
-app.use('/tutor',tutorRouter)
-app.use('/tutors',tutorRouter)
+app.use('/v1/tutor',tutorRouter)
+app.use('/v1/tutors',tutorRouter)
 //tutor routes - admin
-app.use('/admin/tutor',adminRouter)
-app.use('/admin/tutors',adminRouter)
+app.use('/v1/admin/tutor',adminRouter)
+app.use('/v1/admin/tutors',adminRouter)
 
 //subject routes handler
-app.use('/subject',subjectRouter)
-app.use('/subjects',subjectRouter)
+app.use('/v1/subject',subjectRouter)
+app.use('/v1/subjects',subjectRouter)
 
 //category routes handler
-app.use('/category',categoryRouter)
-app.use('/categories',categoryRouter)
+app.use('/v1/category',categoryRouter)
+app.use('/v1/categories',categoryRouter)
 //lesson routes
-app.use('/lesson',lessonRouter);
-app.use('/lessons',lessonRouter);
+app.use('/v1/lesson',lessonRouter);
+app.use('/v1/lessons',lessonRouter);
 //lessons routes -admin access
-app.use('/admin/lesson',lessonRouter);
-app.use('/admin/lessons',lessonRouter);
+app.use('/v1/admin/lesson',lessonRouter);
+app.use('/v1/admin/lessons',lessonRouter);
 
 
 
@@ -89,6 +92,7 @@ app.use((err, req, res, next) => {
     });
   });
 //start(create) server
-app.listen(3000,() => {
+let port = process.env.PORT || 3000
+app.listen(port,() => {
     console.log("node app listening")
 })
