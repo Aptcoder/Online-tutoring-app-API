@@ -377,7 +377,7 @@
             }```
 
 
-            ## Tutor Routes 
+## Tutor Routes 
 * **Tutors can register to take a course in a category :**
 `POST` /tutor/subject/register 
 
