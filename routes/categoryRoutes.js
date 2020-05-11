@@ -16,7 +16,7 @@ router.get('/:category/subject/:id',generalAuth,subjController.getSubInCatById)
 router.put('/:category/subject/:id',adminAuth,subjController.updateSubject)
 router.delete('/:category/subject/:id',adminAuth,subjController.deleteSubject)
 
-//route to get all categories
+//route to get,update and delete  categories
 router.get('/',generalAuth,controller.getCategories)
 router.put('/:category',adminAuth,controller.updateCategory)
 router.delete('/:category',adminAuth,controller.deleteCategory)

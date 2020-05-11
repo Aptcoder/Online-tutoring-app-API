@@ -67,7 +67,6 @@ app.use('/v1/admin/lessons',lessonRouter);
 
 app.use((err, req, res, next) => {
 
-
     if(err instanceof ErrorHandler ){
         console.log("i got here")
        return handleError(err,res)
