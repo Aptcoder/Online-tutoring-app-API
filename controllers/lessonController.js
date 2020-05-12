@@ -170,6 +170,9 @@ const updateLesson = function(req,res,next){
                 message : "Lesson updated",
                 success : true
             })
+           }).catch((err) => {
+               console.log('could not update for some reason' + err)
+               next(err)
            })
             })
         .catch((err)=> {
