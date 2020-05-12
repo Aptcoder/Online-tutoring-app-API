@@ -1076,7 +1076,7 @@ content :
 
 *  **Admin  can book lesson :**
 
-`POST` /student/lesson/book
+`POST` /admin/lesson/book
 
 > Note : Admin authentication needed for this route 
 

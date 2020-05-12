@@ -92,11 +92,11 @@ const getLessonById = function(req,res,next){
     //populate the response with tutors and students
     .populate({path : 'tutor',select : ['username','first_name','email']})
     .populate({path : 'student',select : ['username','first_name','email']})
-    .then((tutor)=>{
+    .then((lesson)=>{
         res.send({
             message : 'Lesson found',
             success : true,
-            tutor
+            lesson
         })
     }).catch((err) => {
         console.log('Could not find lesson by id' + err)
