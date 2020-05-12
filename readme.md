@@ -1202,7 +1202,7 @@ id |ObjectId | ***Required** : The id of the lesson to be updated
 name |type | description
 --------|--------|---------
 tutor|String | ***Required** : The username of the tutor to take the lesson
-date |String| ***Required** : the date of the lesson. format is "YYYY:MM:DD"
+date |String| ***Required** : the date of the lesson. format is "YYYY-MM-DD"
 time|String | ***Required** : The time of the lesson. Format is "HH:SS"
 student|String|***Required** : The username of the Student to take the lesson
 

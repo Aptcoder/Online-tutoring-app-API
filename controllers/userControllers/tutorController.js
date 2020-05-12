@@ -197,7 +197,7 @@ const getTutorsByName = function(req,res,next){
             if(!tutors.length){
                 console.log(tutors.populated())
                 return res.status(401).send({
-                    message : "`Tutor with name ${name} not found`",
+                    message : `Tutor with name ${name} not found`,
                     status : 401,
                     success : false
                 })
