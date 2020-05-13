@@ -4,6 +4,9 @@ const lessonController = require('../../controllers/lessonController')
 const studentAuth = require('../../controllers/authentication/studentAuth');
 var router = express.Router();
 
+// route for user sign up 
+// route for user sign up 
+// route for user sign up 
 router.post('/signup',controller.signUpStudent)
 router.post('/login',controller.loginStudent)
 
