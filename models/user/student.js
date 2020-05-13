@@ -92,11 +92,13 @@ studentSchema.methods.generateToken = function(){
     })
 }
 
+//edit the properties that are returned as json response
 studentSchema.methods.toJSON = function(){
     let student = this
     let studentObject = student.toObject();
 
-    return _.pick(studentObject,['_id','first_name','email',])
+    //use lodash to pick some properties
+    return _.pick(studentObject,['_id','username','first_name','email',])
 }
 
 studentSchema.statics.verifyToken = function(authToken){

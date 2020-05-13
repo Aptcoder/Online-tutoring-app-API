@@ -50,8 +50,6 @@ var tutorSchema = mongoose.Schema({
         minlength : [6,"password must not be less than six characters"]
     },
 
-    subjects : [{type : mongoose.Schema.Types.ObjectId , ref : 'Subject' ,unique: true}],
-
     role: {
         type : String,
         enum : ["admin","tutor"],
@@ -83,7 +81,7 @@ tutorSchema.methods.toJSON = function(){
     let tutor = this
     let tutorObject = tutor.toObject();
 
-    return _.pick(tutorObject,['_id','first_name','subjects','email'])
+    return _.pick(tutorObject,['_id','username','first_name','subjects','email'])
 }
 
 

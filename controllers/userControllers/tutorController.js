@@ -15,7 +15,13 @@ const signUpTutor = function(req,res,next){
     var email = req.body.email
     
 
-    
+    if(!email || !password || !first_name || !username){
+        res.status(400).send({
+            message :"Oops,seems like you missed something required",
+            status : 400,
+            success : false
+        })
+    }
 
 
     if(password.length < 6){
@@ -52,7 +58,7 @@ const signUpTutor = function(req,res,next){
     }).catch((err) => {
         console.log('could not save tutor :' + err);
         res.status(400).send({
-            message :"email address already exists",
+            message :"email or username already exists",
             status : 400,
             success : false
         })
@@ -191,7 +197,7 @@ const getTutorsByName = function(req,res,next){
             if(!tutors.length){
                 console.log(tutors.populated())
                 return res.status(401).send({
-                    message : "`Tutor with name ${name} not found`",
+                    message : `Tutor with name ${name} not found`,
                     status : 401,
                     success : false
                 })

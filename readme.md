@@ -15,10 +15,14 @@ API is available at : https://young-chamber-31283.herokuapp.com/v1/
 ### info : 
     title : Online tutoring app
     description : The online tutoring app API is built for the task 4 of the node js track of start.ng 2020.
+
     All requests and responses with this API use the JSON format.
+
     Authentication is with JWT tokens which are persisted as cookies to ensure good user experience. 
+    Authentication is needed for all routes.Users must be signed in
     
 `base path`  : https://young-chamber-31283.herokuapp.com/v1/
+
 #### Endpoints :
 * **All users can retrieve a subject in a category by id**
     `GET` /category/:category/subject/:id
@@ -630,14 +634,21 @@ id :  student._id           }
 success :  false,
 status :  400  }```
 	   status: 400
-    This would be a response if the email is already in use or last name not provided 
+    This would be a response if the email or username is already in use or last name not provided 
 		content : 
             ```{
-          message :  "email address already exists",
+          message :  "email or username already exists",
 success :  false,
 status :  400
      }```
-
+        status: 400
+    This would be a response if one of the required parameters is missing
+		content : 
+            ```{
+          message :  "Oops.seems like you missed someting required",
+success :  false,
+status :  400
+     }```
 
 * **Students can book lesson :**
 `POST` /student/lesson/book
@@ -651,7 +662,7 @@ status :  400
      name |type   | description
     --------|--------|---------
     tutor|String  | ***Required** : The username of the tutor to take the lesson
-    Date |String| ***Required** : the date of the lesson. format is "YYYY:MM:DD"
+    Date |String| ***Required** : the date of the lesson. format is ISO formtat,"YYYY-MM-DD"
     time|String  | ***Required** : The time of the lesson. Format is "HH:SS"
 
  **Responses :**
@@ -1073,7 +1084,7 @@ content :
 
 *  **Admin  can book lesson :**
 
-`POST` /student/lesson/book
+`POST` /admin/lesson/book
 
 > Note : Admin authentication needed for this route 
 
@@ -1083,7 +1094,7 @@ content :
 name |type | description
 --------|--------|---------
 tutor|String | ***Required** : The username of the tutor to take the lesson
-Date |String| ***Required** : the date of the lesson. format is "YYYY:MM:DD"
+date |String| ***Required** : the date of the lesson. format is ISO format, "YYYY-MM-DD"
 time|String | ***Required** : The time of the lesson. Format is "HH:SS"
 student|String|***Required** : The username of the Student to take the lesson
 
@@ -1199,7 +1210,7 @@ id |ObjectId | ***Required** : The id of the lesson to be updated
 name |type | description
 --------|--------|---------
 tutor|String | ***Required** : The username of the tutor to take the lesson
-Date |String| ***Required** : the date of the lesson. format is "YYYY:MM:DD"
+date |String| ***Required** : the date of the lesson. format is "YYYY-MM-DD"
 time|String | ***Required** : The time of the lesson. Format is "HH:SS"
 student|String|***Required** : The username of the Student to take the lesson
 
@@ -1285,14 +1296,21 @@ content :
 	success : false,
 	status : 400 }```
 status: 400
-This would be a response if the email is already in use or last name not provided
+This would be a response if the email or username is already in use or last name not provided
 content :
 	```{
-	message : "email address already exists",
+	message : "email or username already exists",
 	success : false,
 	status : 400
 	}```
-
+      status: 400
+    This would be a response if one of the required parameters is missing
+		content : 
+            ```{
+          message :  "Oops.seems like you missed someting required",
+success :  false,
+status :  400
+     }```
 *  **Admin can delete a lesson**
 `DELETE` /admin/lesson/:id
 > Note : Tutor authentication is needed for this route. Tutor has to be signed in
