@@ -1,4 +1,5 @@
 API is available at : https://young-chamber-31283.herokuapp.com/v1/
+POSTMAN collection available at: https://www.getpostman.com/collections/4ab5941cbdd94c4667eb
 
 # Online Tutoring App
 
