@@ -11,9 +11,12 @@ Trying to access a route without proper authentication would give a 403 status
 ### info : 
     title : Online tutoring app
     description : The online tutoring app API is built for the task 4 of the node js track of start.ng 2020.
+
     All requests and responses with this API use the JSON format.
+
     Authentication is with JWT tokens which are persisted as cookies to ensure good user experience. 
     
+    Authentication is needed for all routes.Users must be signed in
 `base path`  : 
 #### Endpoints :
 * **All users can retrieve a subject in a category by id**
@@ -376,7 +379,7 @@ Trying to access a route without proper authentication would give a 403 status
             }```
 
 
-            ## Tutor Routes 
+## Tutor Routes 
 * **Tutors can register to take a course in a category :**
 `POST` /tutor/subject/register 
 
